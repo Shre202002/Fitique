@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from 'react';
+import { useState, use } from 'react';
 import Image from 'next/image';
 import { getProductById } from '@/lib/data';
 import { Button } from '@/components/ui/button';
@@ -23,9 +23,10 @@ import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@/types';
 
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
   // In a real app, you'd fetch this data. We'll use our mock function.
-  const product = getProductById(params.id);
+  const { id } = use(params);
+  const product = getProductById(id);
 
   if (!product) {
     notFound();
