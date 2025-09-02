@@ -53,8 +53,11 @@ function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
                 <Label htmlFor="shoulder" className="text-right">Shoulder (cm)</Label>
                 <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
             </div>
-            <DialogFooter>
+            <DialogFooter className='sm:justify-between gap-2 flex-col sm:flex-row-reverse'>
                 <Button type="submit">Save & Add to Cart</Button>
+                 <Button type="button" variant="default" className="bg-yellow-400 hover:bg-yellow-500 text-black">
+                   AI Size Helper
+                </Button>
             </DialogFooter>
         </form>
     );
