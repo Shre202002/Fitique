@@ -108,7 +108,7 @@ export default function Home() {
 
       <section className="py-12 md:py-16 bg-muted/50">
         <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
+          <div className="flex justify-between items-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-accent">
                 Trending Now
@@ -117,18 +117,16 @@ export default function Home() {
                 Handpicked styles and trending designs, curated just for you.
               </p>
             </div>
+             <Link href="/products">
+                <Button size="lg" variant="outline">
+                    View All
+                </Button>
+              </Link>
           </div>
           <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8 pt-12">
             {featuredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
-          </div>
-          <div className="text-center mt-12">
-             <Link href="/products">
-                <Button size="lg" variant="outline">
-                    View All Products
-                </Button>
-              </Link>
           </div>
         </div>
       </section>

@@ -3,17 +3,21 @@ import Image from 'next/image';
 import type { Product } from '@/types';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star } from 'lucide-react';
+import { Star, Heart } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+
 
 interface ProductCardProps {
   product: Product;
 }
 
 export function ProductCard({ product }: ProductCardProps) {
+  const originalPrice = product.price * 1.25;
+
   return (
-    <Card className="w-full max-w-sm rounded-lg overflow-hidden group border-border/80 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col">
-      <Link href={`/products/${product.id}`} className="block flex-grow">
-        <div className="overflow-hidden">
+    <Card className="w-full max-w-sm rounded-lg overflow-hidden group border-border/80 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col bg-card">
+      <Link href={`/products/${product.id}`} className="block flex-grow flex flex-col">
+        <div className="overflow-hidden relative">
           <Image
             src={product.images[0]}
             alt={product.name}
@@ -23,25 +27,31 @@ export function ProductCard({ product }: ProductCardProps) {
             data-ai-hint="fashion clothing"
           />
         </div>
-        <CardContent className="p-4 bg-card">
-          <h3 className="text-lg font-bold text-card-foreground truncate">{product.name}</h3>
-          <p className="text-sm text-muted-foreground">{product.category}</p>
-          <div className="flex items-center justify-between mt-4">
-            <p className="text-xl font-bold text-primary">${product.price.toFixed(2)}</p>
-            <div className="flex items-center gap-1">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-4 h-4 ${i < Math.round(product.rating) ? 'text-yellow-400 fill-yellow-400' : 'text-gray-300'}`}
-                />
-              ))}
-              <span className="text-xs text-muted-foreground ml-1">({product.reviewCount})</span>
+        <CardContent className="p-4 flex-grow flex flex-col">
+          <div className="flex gap-2 mb-2">
+            <Badge variant="outline">{product.category}</Badge>
+            {product.stitchingEnabled && <Badge variant="secondary">Custom Size</Badge>}
+          </div>
+          <h3 className="text-base font-semibold text-card-foreground ">{product.name}</h3>
+          <div className="mt-auto pt-4">
+            <div className="flex items-center gap-2">
+                <p className="text-lg font-bold text-primary">${product.price.toFixed(2)}</p>
+                <p className="text-sm text-muted-foreground line-through">${originalPrice.toFixed(2)}</p>
+            </div>
+            <div className="flex items-center gap-1 mt-1">
+              <Star
+                className={`w-4 h-4 text-yellow-400 fill-yellow-400`}
+              />
+              <span className="text-xs text-muted-foreground ml-1">{product.rating} ({product.reviewCount})</span>
             </div>
           </div>
         </CardContent>
       </Link>
-      <CardFooter className="p-4 pt-0">
+       <CardFooter className="p-4 pt-0 flex gap-2">
         <Button className="w-full">Add to Cart</Button>
+        <Button variant="outline" size="icon" className="shrink-0">
+          <Heart className="w-5 h-5" />
+        </Button>
       </CardFooter>
     </Card>
   );

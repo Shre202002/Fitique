@@ -107,8 +107,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
               alt={product.name}
               width={600}
               height={600}
-              className="w-full h-full object-cover transition-opacity opacity-0 duration-500"
-              onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+              className="w-full h-full object-cover"
               data-ai-hint="fashion detail"
             />
           </div>
@@ -120,8 +119,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   alt={`${product.name} view ${index + 1}`}
                   width={150}
                   height={150}
-                  className="w-full h-full object-cover transition-opacity opacity-0 duration-500"
-                  onLoadingComplete={(image) => image.classList.remove('opacity-0')}
+                  className="w-full h-full object-cover"
                   data-ai-hint="product thumbnail"
                 />
               </button>
