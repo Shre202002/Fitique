@@ -189,7 +189,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             {product.stitchingEnabled && (
                 <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
                     <DialogTrigger asChild>
-                        <Button size="lg" variant="default" className="w-full">Custom Size</Button>
+                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black">Custom Size</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
