@@ -32,11 +32,11 @@ export function ProductCard({ product }: ProductCardProps) {
             <Badge variant="outline">{product.category}</Badge>
             {product.stitchingEnabled && <Badge variant="secondary">Custom Size</Badge>}
           </div>
-          <h3 className="text-base font-semibold text-card-foreground ">{product.name}</h3>
+          <h3 className="text-sm sm:text-base font-semibold text-card-foreground ">{product.name}</h3>
           <div className="mt-auto pt-4">
             <div className="flex items-center gap-2">
-                <p className="text-lg font-bold text-primary">₹{product.price.toFixed(2)}</p>
-                <p className="text-sm text-muted-foreground line-through">₹{originalPrice.toFixed(2)}</p>
+                <p className="text-base sm:text-lg font-bold text-primary">₹{product.price.toFixed(2)}</p>
+                <p className="text-xs sm:text-sm text-muted-foreground line-through">₹{originalPrice.toFixed(2)}</p>
             </div>
             <div className="flex items-center gap-1 mt-1">
               <Star
