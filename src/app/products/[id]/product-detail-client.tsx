@@ -98,7 +98,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-foreground">{product.name}</span>
       </div>
-      <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
         {/* Image Gallery */}
         <div className="flex flex-col gap-4 md:sticky top-24 self-start">
           <div className="aspect-square rounded-lg overflow-hidden border bg-card">
@@ -107,7 +107,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
               alt={product.name}
               width={600}
               height={600}
-              className="w-full h-full object-cover transition-all duration-300 ease-in-out"
+              className="w-full h-full object-cover transition-opacity opacity-0 duration-500"
+              onLoadingComplete={(image) => image.classList.remove('opacity-0')}
               data-ai-hint="fashion detail"
             />
           </div>
@@ -119,7 +120,8 @@ export function ProductDetailClient({ product }: { product: Product }) {
                   alt={`${product.name} view ${index + 1}`}
                   width={150}
                   height={150}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover transition-opacity opacity-0 duration-500"
+                  onLoadingComplete={(image) => image.classList.remove('opacity-0')}
                   data-ai-hint="product thumbnail"
                 />
               </button>
@@ -130,7 +132,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         {/* Product Info */}
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-3xl lg:text-4xl font-bold text-accent">{product.name}</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold font-headline text-accent">{product.name}</h1>
             <div className="flex items-center gap-4 mt-2">
                <div className="flex items-center gap-2">
                     <div className="flex items-center">
@@ -183,13 +185,13 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
           
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button size="lg" className="flex-1" onClick={handleAddToCart}>Add to Cart</Button>
-            <Button size="lg" variant="default" className="flex-1 bg-secondary hover:bg-secondary/90 text-secondary-foreground">Buy Now</Button>
+            <Button size="lg" className="flex-1 py-6 sm:py-3 text-base" onClick={handleAddToCart}>Add to Cart</Button>
+            <Button size="lg" variant="default" className="flex-1 py-6 sm:py-3 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground">Buy Now</Button>
           </div>
             {product.stitchingEnabled && (
                 <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
                     <DialogTrigger asChild>
-                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black">Custom Size</Button>
+                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-6 sm:py-3 text-base">Custom Size</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -215,5 +217,3 @@ export function ProductDetailClient({ product }: { product: Product }) {
     </div>
   );
 }
-
-    
