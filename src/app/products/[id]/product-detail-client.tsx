@@ -107,7 +107,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
               alt={product.name}
               width={600}
               height={600}
-              className="w-full h-full object-cover transition-opacity duration-300"
+              className="w-full h-full object-cover transition-all duration-300 ease-in-out"
               data-ai-hint="fashion detail"
             />
           </div>

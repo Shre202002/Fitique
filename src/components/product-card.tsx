@@ -19,7 +19,7 @@ export function ProductCard({ product }: ProductCardProps) {
             alt={product.name}
             width={400}
             height={400}
-            className="w-full h-auto aspect-square object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-auto aspect-square object-cover group-hover:scale-105 transition-all duration-300 ease-in-out"
             data-ai-hint="fashion clothing"
           />
         </div>
