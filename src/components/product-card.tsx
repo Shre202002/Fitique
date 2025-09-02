@@ -26,12 +26,13 @@ export function ProductCard({ product }: ProductCardProps) {
             className="w-full h-auto aspect-square object-cover group-hover:scale-105 transition-all duration-300 ease-in-out"
             data-ai-hint="fashion clothing"
           />
+           <Button variant="ghost" size="icon" className="absolute top-2 right-2 bg-background/50 backdrop-blur-sm hover:bg-background/75 rounded-full">
+                <Heart className="w-5 h-5" />
+            </Button>
+            {product.stitchingEnabled && <Badge variant="default" className="absolute top-2 left-2">Custom</Badge>}
         </div>
         <CardContent className="p-4 flex-grow flex flex-col">
-          <div className="flex gap-2 mb-2">
-            <Badge variant="outline">{product.category}</Badge>
-            {product.stitchingEnabled && <Badge variant="secondary">Custom Size</Badge>}
-          </div>
+          
           <h3 className="text-sm sm:text-base font-semibold text-card-foreground ">{product.name}</h3>
           <div className="mt-auto pt-4">
             <div className="flex items-center gap-2">
@@ -49,9 +50,6 @@ export function ProductCard({ product }: ProductCardProps) {
       </Link>
        <CardFooter className="p-4 pt-0 flex gap-2">
         <Button className="w-full">Add to Cart</Button>
-        <Button variant="outline" size="icon" className="shrink-0">
-          <Heart className="w-5 h-5" />
-        </Button>
       </CardFooter>
     </Card>
   );
