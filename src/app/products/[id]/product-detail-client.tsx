@@ -91,16 +91,16 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
-      <div className="mb-6 text-sm text-muted-foreground flex items-center gap-1.5">
+      <div className="mb-6 text-sm text-muted-foreground flex items-center gap-1.5 flex-wrap">
         <Link href="/" className="hover:text-primary">Home</Link>
         <ChevronRight className="h-4 w-4" />
         <Link href="/products" className="hover:text-primary">Products</Link>
         <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-foreground">{product.name}</span>
       </div>
-      <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-16">
+      <div className="grid md:grid-cols-2 gap-8 lg:gap-16">
         {/* Image Gallery */}
-        <div className="flex flex-col gap-4 sticky top-24 self-start">
+        <div className="flex flex-col gap-4 md:sticky top-24 self-start">
           <div className="aspect-square rounded-lg overflow-hidden border bg-card">
             <Image
               src={selectedImage}
@@ -215,3 +215,5 @@ export function ProductDetailClient({ product }: { product: Product }) {
     </div>
   );
 }
+
+    
