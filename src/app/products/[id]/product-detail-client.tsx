@@ -95,7 +95,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <ChevronRight className="h-4 w-4" />
         <span className="font-medium text-foreground">{product.name}</span>
       </div>
-      <div className="grid md:grid-cols-[2fr_3fr] gap-8 lg:gap-16">
+      <div className="grid md:grid-cols-2 lg:grid-cols-[2fr_3fr] gap-8 lg:gap-16">
         {/* Image Gallery */}
         <div className="flex flex-col gap-4 sticky top-24 self-start">
           <div className="aspect-square rounded-lg overflow-hidden border bg-card">
@@ -127,7 +127,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         {/* Product Info */}
         <div className="flex flex-col gap-6">
           <div>
-            <h1 className="text-2xl lg:text-3xl font-bold text-accent">{product.name}</h1>
+            <h1 className="text-3xl lg:text-4xl font-bold text-accent">{product.name}</h1>
             <div className="flex items-center gap-4 mt-2">
                <div className="flex items-center gap-2">
                     <div className="flex items-center">
@@ -144,7 +144,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
           
           <div>
-            <p className="text-3xl font-bold text-primary">${product.price.toFixed(2)}</p>
+            <p className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</p>
           </div>
 
           <Separator />
@@ -186,7 +186,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             {product.stitchingEnabled && (
                 <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
                     <DialogTrigger asChild>
-                        <Button size="lg" variant="outline" className="flex-1 w-full">Custom Size</Button>
+                        <Button size="lg" variant="secondary" className="w-full">Custom Size</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
@@ -200,10 +200,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 </Dialog>
             )}
           
-          <Separator />
+          <Separator className="my-4" />
 
           <div>
-            <h3 className="text-lg font-semibold mb-2">Product Description</h3>
+            <h3 className="text-xl font-semibold mb-2">Product Description</h3>
             <p className="text-muted-foreground leading-relaxed">{product.description}</p>
           </div>
 
