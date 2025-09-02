@@ -3,13 +3,12 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { getProductById } from '@/lib/data';
+import type { Product } from '@/types';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { Star, Minus, Plus, Check } from 'lucide-react';
-import { notFound } from 'next/navigation';
 import {
   Dialog,
   DialogContent,
@@ -21,9 +20,18 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
-import type { Product } from '@/types';
+import { getAllProducts, getProductById } from '@/lib/data';
+import { notFound } from 'next/navigation';
 
-// This is now a separate client component.
+
+export function generateStaticParams() {
+  const products = getAllProducts();
+ 
+  return products.map((product) => ({
+    id: product.id,
+  }));
+}
+
 function ProductDetailClient({ product }: { product: Product }) {
   const { toast } = useToast();
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
@@ -194,14 +202,13 @@ function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
     );
 }
 
-// The main page component is now a server component.
 export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  const product = getProductById(params.id);
+  const { id } = params;
+  const product = getProductById(id);
 
   if (!product) {
     notFound();
   }
 
-  // It fetches the data and passes it to the client component.
   return <ProductDetailClient product={product} />;
 }
