@@ -147,7 +147,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
           
           <div>
-            <p className="text-4xl font-bold text-primary">${product.price.toFixed(2)}</p>
+            <p className="text-4xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
           </div>
 
           <Separator />
