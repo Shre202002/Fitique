@@ -2,7 +2,7 @@
 
 import { useState, use } from 'react';
 import Image from 'next/image';
-import { getProductById } from '@/lib/data';
+import { getAllProducts, getProductById } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -22,10 +22,16 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@/types';
 
+export async function generateStaticParams() {
+  const products = getAllProducts();
+  return products.map((product) => ({
+    id: product.id,
+  }));
+}
 
-export default function ProductDetailPage({ params }: { params: Promise<{ id: string }> }) {
+export default function ProductDetailPage({ params }: { params: { id: string } }) {
   // In a real app, you'd fetch this data. We'll use our mock function.
-  const { id } = use(params);
+  const { id } = params;
   const product = getProductById(id);
 
   if (!product) {
