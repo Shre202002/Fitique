@@ -42,30 +42,10 @@ export default function ProductsPage() {
             </div>
         </div>
       
-      <div className="grid md:grid-cols-[280px_1fr] gap-8">
-        <div>
-            {/* TODO: Filter Sidebar */}
-            <h3 className='text-lg font-semibold text-accent mb-4'>Filters</h3>
-            <div className='space-y-6'>
-                <div>
-                    <h4 className='font-medium mb-2'>Category</h4>
-                    {/* Placeholder for category filters */}
-                </div>
-                 <div>
-                    <h4 className='font-medium mb-2'>Price Range</h4>
-                    {/* Placeholder for price slider */}
-                </div>
-                 <div>
-                    <h4 className='font-medium mb-2'>Size</h4>
-                    {/* Placeholder for size filters */}
-                </div>
-            </div>
-        </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-8">
-            {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
-            ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        {products.map((product) => (
+          <ProductCard key={product.id} product={product} />
+        ))}
       </div>
     </div>
   );
