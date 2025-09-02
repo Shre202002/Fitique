@@ -184,14 +184,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button size="lg" className="flex-1 py-6 sm:py-3 text-base" onClick={handleAddToCart}>Add to Cart</Button>
-            <Button size="lg" variant="default" className="flex-1 py-6 sm:py-3 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground">Buy Now</Button>
+          <div className="flex flex-row gap-4 mt-4">
+            <Button size="lg" className="flex-1 text-base" onClick={handleAddToCart}>Add to Cart</Button>
+            <Button size="lg" variant="default" className="flex-1 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground">Buy Now</Button>
           </div>
             {product.stitchingEnabled && (
                 <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
                     <DialogTrigger asChild>
-                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black py-6 sm:py-3 text-base">Custom Size</Button>
+                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black text-base">Custom Size</Button>
                     </DialogTrigger>
                     <DialogContent>
                         <DialogHeader>
