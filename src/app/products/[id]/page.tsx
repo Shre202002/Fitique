@@ -1,8 +1,9 @@
+
 "use client"
 
-import { useState, use } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { getAllProducts, getProductById } from '@/lib/data';
+import { getProductById } from '@/lib/data';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
@@ -22,27 +23,7 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import type { Product } from '@/types';
 
-export async function generateStaticParams() {
-  const products = getAllProducts();
-  return products.map((product) => ({
-    id: product.id,
-  }));
-}
-
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
-  // In a real app, you'd fetch this data. We'll use our mock function.
-  const { id } = params;
-  const product = getProductById(id);
-
-  if (!product) {
-    notFound();
-  }
-
-  // This wrapper passes the server-fetched data to the client component
-  return <ProductDetailClient product={product} />;
-}
-
-
+// This is now a separate client component.
 function ProductDetailClient({ product }: { product: Product }) {
   const { toast } = useToast();
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
@@ -211,4 +192,16 @@ function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
             </DialogFooter>
         </form>
     );
+}
+
+// The main page component is now a server component.
+export default function ProductDetailPage({ params }: { params: { id: string } }) {
+  const product = getProductById(params.id);
+
+  if (!product) {
+    notFound();
+  }
+
+  // It fetches the data and passes it to the client component.
+  return <ProductDetailClient product={product} />;
 }
