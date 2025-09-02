@@ -26,9 +26,6 @@ export function Header() {
   const navLinks = [
     { href: '/', label: 'Home' },
     { href: '/products', label: 'All Products' },
-    { href: '/products?category=Men', label: 'Men' },
-    { href: '/products?category=Women', label: 'Women' },
-    { href: '/products?category=Kids', label: 'Kids' },
   ];
 
   return (

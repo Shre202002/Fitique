@@ -55,9 +55,6 @@ export function Footer() {
         <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-3 md:col-span-2">
           <div className="grid gap-1">
             <h3 className="font-semibold">Shop</h3>
-            <Link href="/products?category=Men" className="hover:underline text-accent-foreground/80">Men</Link>
-            <Link href="/products?category=Women" className="hover:underline text-accent-foreground/80">Women</Link>
-            <Link href="/products?category=Kids" className="hover:underline text-accent-foreground/80">Kids</Link>
             <Link href="/products" className="hover:underline text-accent-foreground/80">All Products</Link>
           </div>
           <div className="grid gap-1">
@@ -83,7 +80,7 @@ export function Footer() {
             <Input
               type="email"
               placeholder="Enter your email"
-              className="flex-1 bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground placeholder:text-accent-foreground/60 focus:ring-primary-foreground"
+              className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground placeholder:text-accent-foreground/60 focus:ring-primary-foreground"
             />
             <Button type="submit" variant="secondary" className="bg-primary-foreground text-accent hover:bg-primary-foreground/90">Sign Up</Button>
           </form>
