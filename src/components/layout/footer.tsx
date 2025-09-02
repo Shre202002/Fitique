@@ -42,52 +42,45 @@ function InstagramIcon(props: React.SVGProps<SVGSVGElement>) {
 export function Footer() {
   return (
     <footer className="bg-accent text-accent-foreground">
-      <div className="container mx-auto grid max-w-7xl grid-cols-1 gap-8 px-4 py-12 md:grid-cols-4 md:px-6">
+      <div className="container mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4 py-12 md:px-6">
         <div className="flex flex-col gap-4">
-          <Link href="/" className="flex items-center gap-2">
-            <MountainIcon className="h-6 w-6" />
-            <span className="text-xl font-bold">Fitique</span>
-          </Link>
-          <p className="text-sm text-accent-foreground/80">
-            Beautifully crafted, custom-fit clothing.
-          </p>
+            <h3 className="font-semibold">NEED HELP?</h3>
+            <div className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline text-accent-foreground/80">Contact Us</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Track Order</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Returns & Refunds</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">FAQ's</Link>
+            </div>
         </div>
-        <div className="grid grid-cols-2 gap-4 text-sm md:grid-cols-3 md:col-span-2">
-          <div className="grid gap-1">
-            <h3 className="font-semibold">Shop</h3>
-            <Link href="/products" className="hover:underline text-accent-foreground/80">All Products</Link>
-          </div>
-          <div className="grid gap-1">
-            <h3 className="font-semibold">Company</h3>
-            <Link href="#" className="hover:underline text-accent-foreground/80">About Us</Link>
-            <Link href="/tailor/register" className="hover:underline text-accent-foreground/80">Become a Tailor</Link>
-            <Link href="#" className="hover:underline text-accent-foreground/80">Careers</Link>
-            <Link href="#" className="hover:underline text-accent-foreground/80">Contact</Link>
-          </div>
-          <div className="grid gap-1">
-            <h3 className="font-semibold">Support</h3>
-            <Link href="#" className="hover:underline text-accent-foreground/80">FAQ</Link>
-            <Link href="#" className="hover:underline text-accent-foreground/80">Shipping & Returns</Link>
-            <Link href="#" className="hover:underline text-accent-foreground/80">Privacy Policy</Link>
-          </div>
+        <div className="grid gap-1 text-sm">
+            <h3 className="font-semibold">COMPANY</h3>
+             <div className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline text-accent-foreground/80">About Us</Link>
+                <Link href="/tailor/register" className="hover:underline text-accent-foreground/80">Become a Tailor</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Careers</Link>
+            </div>
+        </div>
+        <div className="grid gap-1 text-sm">
+             <h3 className="font-semibold">MORE INFO</h3>
+             <div className="grid gap-2 text-sm">
+                <Link href="#" className="hover:underline text-accent-foreground/80">Terms and Conditions</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Privacy Policy</Link>
+             </div>
         </div>
         <div className="flex flex-col gap-4">
-          <h3 className="font-semibold">Stay Connected</h3>
-          <p className="text-sm text-accent-foreground/80">
-            Sign up for our newsletter to get the latest updates.
-          </p>
+          <h3 className="font-semibold">STAY UP TO DATE</h3>
           <form className="flex gap-2">
             <Input
               type="email"
               placeholder="Enter your email"
               className="bg-accent-foreground/10 border-accent-foreground/20 text-accent-foreground placeholder:text-accent-foreground/60 focus:ring-primary-foreground"
             />
-            <Button type="submit" variant="secondary" className="bg-primary-foreground text-accent hover:bg-primary-foreground/90">Sign Up</Button>
+            <Button type="submit" variant="secondary" className="bg-primary-foreground text-accent hover:bg-primary-foreground/90">Subscribe</Button>
           </form>
         </div>
       </div>
       <div className="border-t border-accent-foreground/20">
-        <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm md:px-6">
+        <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm md:px-6 flex-wrap gap-4">
           <p className="text-accent-foreground/80">&copy; {new Date().getFullYear()} Fitique. All rights reserved.</p>
           <div className="flex gap-4 text-accent-foreground/80">
             <FacebookIcon className="h-5 w-5 hover:text-primary-foreground" />

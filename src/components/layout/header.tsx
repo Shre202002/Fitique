@@ -24,8 +24,10 @@ function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function Header() {
   const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/products', label: 'All Products' },
+    { href: '/products', label: 'Men' },
+    { href: '/products', label: 'Women' },
+    { href: '/products', label: 'Kids' },
+    { href: '/products', label: 'Accessories' },
   ];
 
   return (
@@ -39,7 +41,7 @@ export function Header() {
           <nav className="hidden md:flex gap-4">
             {navLinks.map((link) => (
               <Link
-                key={link.href}
+                key={link.label}
                 href={link.href}
                 className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
               >
@@ -54,17 +56,19 @@ export function Header() {
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
-          <Button variant="ghost" size="icon" className="hidden md:inline-flex">
-            <Heart className="h-5 w-5" />
-            <span className="sr-only">Wishlist</span>
-          </Button>
+          <Link href="/account">
+            <Button variant="ghost" size="icon" className="hidden md:inline-flex">
+              <Heart className="h-5 w-5" />
+              <span className="sr-only">Wishlist</span>
+            </Button>
+          </Link>
           <Link href="/cart">
             <Button variant="ghost" size="icon">
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Cart</span>
             </Button>
           </Link>
-          <Link href="/login">
+          <Link href="/account">
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
               <span className="sr-only">Account</span>
@@ -87,7 +91,7 @@ export function Header() {
                 <nav className="flex flex-col gap-4">
                   {navLinks.map((link) => (
                     <Link
-                      key={link.href}
+                      key={link.label}
                       href={link.href}
                       className="text-lg font-medium text-foreground transition-colors hover:text-primary"
                     >
