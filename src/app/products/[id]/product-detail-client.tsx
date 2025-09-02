@@ -30,20 +30,28 @@ function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
     return (
         <form onSubmit={handleSubmit} className="grid gap-4 py-4">
             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="height" className="text-right">Height</Label>
-                <Input id="height" placeholder="e.g. 5' 10&quot;" className="col-span-3" />
+                <Label htmlFor="height" className="text-right">Height (cm)</Label>
+                <Input id="height" placeholder="e.g. 178" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="chest" className="text-right">Chest</Label>
-                <Input id="chest" placeholder="e.g. 40" className="col-span-3" />
+                <Label htmlFor="chest" className="text-right">Chest (cm)</Label>
+                <Input id="chest" placeholder="e.g. 102" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="waist" className="text-right">Waist</Label>
-                <Input id="waist" placeholder="e.g. 32" className="col-span-3" />
+                <Label htmlFor="waist" className="text-right">Waist (cm)</Label>
+                <Input id="waist" placeholder="e.g. 81" className="col-span-3" />
             </div>
             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="hips" className="text-right">Hips</Label>
-                <Input id="hips" placeholder="e.g. 42" className="col-span-3" />
+                <Label htmlFor="hips" className="text-right">Hips (cm)</Label>
+                <Input id="hips" placeholder="e.g. 106" className="col-span-3" />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="neck" className="text-right">Neck (cm)</Label>
+                <Input id="neck" placeholder="e.g. 40" className="col-span-3" />
+            </div>
+             <div className="grid grid-cols-4 items-center gap-4">
+                <Label htmlFor="shoulder" className="text-right">Shoulder (cm)</Label>
+                <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
             </div>
             <DialogFooter>
                 <Button type="submit">Save & Add to Cart</Button>
@@ -69,6 +77,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
   };
 
   const handleCustomSizeSubmit = () => {
+    // In a real app, you would save the measurements here.
     handleAddToCart();
     setCustomSizeOpen(false);
     toast({
@@ -185,7 +194,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
                         <DialogHeader>
                             <DialogTitle>Custom Measurements</DialogTitle>
                             <DialogDescription>
-                                Please provide your measurements for a perfect fit. All measurements are in inches.
+                                Please provide your measurements for a perfect fit. All measurements are in centimeters.
                             </DialogDescription>
                         </DialogHeader>
                         <CustomSizeForm onSubmit={handleCustomSizeSubmit} />
