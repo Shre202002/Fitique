@@ -63,6 +63,7 @@ export function Footer() {
           <div className="grid gap-1">
             <h3 className="font-semibold">Company</h3>
             <Link href="#" className="hover:underline text-accent-foreground/80">About Us</Link>
+            <Link href="/tailor/register" className="hover:underline text-accent-foreground/80">Become a Tailor</Link>
             <Link href="#" className="hover:underline text-accent-foreground/80">Careers</Link>
             <Link href="#" className="hover:underline text-accent-foreground/80">Contact</Link>
           </div>
