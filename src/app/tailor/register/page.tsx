@@ -27,7 +27,7 @@ export default function TailorRegisterPage() {
     <div className="container mx-auto max-w-4xl px-4 py-8 md:py-12">
         <div className="text-center mb-8">
              <h1 className="text-4xl md:text-5xl font-bold font-headline text-accent">
-                Join Skyloom as a Tailor
+                Join Fitique as a Tailor
             </h1>
             <p className="text-lg text-muted-foreground mt-2 max-w-2xl mx-auto">
                 Share your craftsmanship with fashion enthusiasts and build your custom tailoring business.
@@ -171,7 +171,7 @@ export default function TailorRegisterPage() {
                     <div className="flex items-start gap-2">
                         <Checkbox id="commission" required />
                         <Label htmlFor="commission" className="text-sm font-normal">
-                            I agree to the 10% commission structure on each successful order through the Skyloom platform.
+                            I agree to the 10% commission structure on each successful order through the Fitique platform.
                         </Label>
                     </div>
                 </CardContent>

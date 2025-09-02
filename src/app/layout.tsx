@@ -5,7 +5,7 @@ import { Footer } from '@/components/layout/footer';
 import { Toaster } from '@/components/ui/toaster';
 
 export const metadata: Metadata = {
-  title: 'Skyloom',
+  title: 'Fitique',
   description: 'Custom tailored fashion at your fingertips.',
 };
 

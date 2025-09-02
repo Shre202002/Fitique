@@ -46,7 +46,7 @@ export function Footer() {
         <div className="flex flex-col gap-4">
           <Link href="/" className="flex items-center gap-2">
             <MountainIcon className="h-6 w-6" />
-            <span className="text-xl font-bold">Skyloom</span>
+            <span className="text-xl font-bold">Fitique</span>
           </Link>
           <p className="text-sm text-accent-foreground/80">
             Beautifully crafted, custom-fit clothing.
@@ -88,7 +88,7 @@ export function Footer() {
       </div>
       <div className="border-t border-accent-foreground/20">
         <div className="container mx-auto flex max-w-7xl items-center justify-between px-4 py-4 text-sm md:px-6">
-          <p className="text-accent-foreground/80">&copy; {new Date().getFullYear()} Skyloom. All rights reserved.</p>
+          <p className="text-accent-foreground/80">&copy; {new Date().getFullYear()} Fitique. All rights reserved.</p>
           <div className="flex gap-4 text-accent-foreground/80">
             <FacebookIcon className="h-5 w-5 hover:text-primary-foreground" />
             <TwitterIcon className="h-5 w-5 hover:text-primary-foreground" />
