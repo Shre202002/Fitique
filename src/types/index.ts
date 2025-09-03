@@ -4,7 +4,7 @@ export type Product = {
   description: string;
   price: number;
   images: string[];
-  category: 'Men' | 'Women' | 'Kids' | 'Accessories';
+  category: string;
   color: string;
   sizes: string[];
   isFeatured?: boolean;

@@ -10,7 +10,6 @@ import { useState } from 'react';
 
 const initialCartItems = [
   { id: 1, productId: 'classic-blue-denim', name: 'Classic Blue Denim Jacket', price: 89.99, quantity: 1, size: 'M', image: 'https://placehold.co/100x100.png', isCustom: false },
-  { id: 2, productId: 'summer-floral-dress', name: 'Summer Floral Maxi Dress', price: 120.00, quantity: 1, size: 'Custom', image: 'https://placehold.co/100x100.png', isCustom: true },
 ];
 
 export default function CartPage() {

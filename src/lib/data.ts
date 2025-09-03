@@ -33,7 +33,7 @@ const products: Product[] = [
     id: 'premium-cotton-kurta',
     name: 'Premium Cotton Kurta with Embroidery',
     description: 'A beautifully crafted premium cotton kurta featuring intricate embroidery. Perfect for festive occasions and traditional events, offering both comfort and style.',
-    price: 2499,
+    price: 2499.00,
     images: ['https://picsum.photos/600/600?image=838', 'https://picsum.photos/600/600?image=839', 'https://picsum.photos/600/600?image=841'],
     category: 'Traditional Wear',
     color: 'White',
