@@ -1,3 +1,4 @@
+
 "use client"
 import Link from 'next/link';
 import Image from 'next/image';
@@ -18,6 +19,19 @@ export default function CartPage() {
   const subtotal = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
   const shipping = 5.00;
   const total = subtotal + shipping;
+
+  const handleIncreaseQuantity = (id: number) => {
+    setCartItems(cartItems.map(item => item.id === id ? { ...item, quantity: item.quantity + 1 } : item));
+  };
+
+  const handleDecreaseQuantity = (id: number) => {
+    setCartItems(cartItems.map(item => item.id === id && item.quantity > 1 ? { ...item, quantity: item.quantity - 1 } : item));
+  };
+
+  const handleRemoveItem = (id: number) => {
+    setCartItems(cartItems.filter(item => item.id !== id));
+  };
+
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-8 md:px-6">
@@ -54,14 +68,14 @@ export default function CartPage() {
                     <p className="font-bold text-lg text-primary">${item.price.toFixed(2)}</p>
                     {!item.isCustom && (
                         <div className="flex items-center gap-2 border rounded-md">
-                            <Button variant="ghost" size="icon" className="h-8 w-8"><Minus className="h-4 w-4" /></Button>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDecreaseQuantity(item.id)}><Minus className="h-4 w-4" /></Button>
                             <span className="w-4 text-center">{item.quantity}</span>
-                            <Button variant="ghost" size="icon" className="h-8 w-8"><Plus className="h-4 w-4" /></Button>
+                            <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleIncreaseQuantity(item.id)}><Plus className="h-4 w-4" /></Button>
                         </div>
                     )}
                     </div>
                 </div>
-                <Button variant="ghost" size="icon" className="self-start text-muted-foreground hover:text-destructive hover:bg-destructive/10">
+                <Button variant="ghost" size="icon" className="self-start text-muted-foreground hover:text-destructive hover:bg-destructive/10" onClick={() => handleRemoveItem(item.id)}>
                     <X className="w-5 h-5" />
                 </Button>
                 </div>
