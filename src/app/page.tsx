@@ -72,7 +72,7 @@ export default function Home() {
 
   return (
     <div className="flex flex-col bg-background">
-      <section className="relative w-full h-[80vh] md:h-screen text-white -mt-[160px]">
+      <section className="relative w-full h-screen text-white">
         <Carousel 
             className="w-full h-full embla-fade" 
             plugins={[autoplay.current]}
@@ -90,7 +90,7 @@ export default function Home() {
                             priority={index === 0}
                         />
                         <div className="absolute inset-0 bg-black/40" />
-                        <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
+                        <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 z-10">
                             <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
                                 {slide.title}
                             </h1>
