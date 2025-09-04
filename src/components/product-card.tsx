@@ -48,7 +48,7 @@ export function ProductCard({ product }: ProductCardProps) {
           </div>
         </CardContent>
       </Link>
-       <CardFooter className="p-4 pt-0 flex gap-2">
+       <CardFooter className="p-4 pt-0">
         <Button className="w-full">Add to Cart</Button>
       </CardFooter>
     </Card>

@@ -1,4 +1,3 @@
-
 "use client"
 
 import { useState } from 'react';
@@ -9,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { Star, Minus, Plus, Check, ChevronRight } from 'lucide-react';
+import { Star, Minus, Plus, Check, ChevronRight, Heart } from 'lucide-react';
 import {
   Dialog,
   DialogContent,
@@ -19,8 +18,16 @@ import {
   DialogFooter,
   DialogDescription,
 } from "@/components/ui/dialog"
+import {
+    Accordion,
+    AccordionContent,
+    AccordionItem,
+    AccordionTrigger,
+  } from "@/components/ui/accordion"
 import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
+import { ProductCard } from '@/components/product-card';
+import { getFeaturedProducts } from '@/lib/data';
 
 function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
     const handleSubmit = (e: React.FormEvent) => {
@@ -69,6 +76,9 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const [isCustomSizeOpen, setCustomSizeOpen] = useState(false);
+  const similarProducts = getFeaturedProducts().filter(p => p.id !== product.id).slice(0, 4);
+  const originalPrice = product.price * 1.25;
+
 
   const handleAddToCart = () => {
     console.log(`Added to cart: ${product.name}, Size: ${selectedSize}, Quantity: ${quantity}`);
@@ -147,10 +157,12 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
           
           <div>
-            <p className="text-4xl font-bold text-primary">₹{product.price.toFixed(2)}</p>
+            <p className="text-2xl font-bold text-primary flex items-center gap-2">
+                <span>₹{product.price.toFixed(2)}</span>
+                <span className="text-lg text-muted-foreground line-through">₹{originalPrice.toFixed(2)}</span>
+                <span className="text-base font-normal text-green-600">(20% OFF)</span>
+            </p>
           </div>
-
-          <Separator />
           
           <div className="flex flex-col gap-4">
             <Label className="text-lg font-semibold">Size</Label>
@@ -182,9 +194,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
           
-          <div className="flex flex-row gap-4 mt-4">
+          <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button size="lg" className="flex-1 text-base" onClick={handleAddToCart}>Add to Cart</Button>
-            <Button size="lg" variant="default" className="flex-1 text-base bg-secondary hover:bg-secondary/90 text-secondary-foreground">Buy Now</Button>
+            <Button size="lg" variant="ghost" className="flex-1 text-base border border-primary gap-2">
+                <Heart className="w-5 h-5"/> Wishlist
+            </Button>
           </div>
             {product.stitchingEnabled && (
                 <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
@@ -203,13 +217,32 @@ export function ProductDetailClient({ product }: { product: Product }) {
                 </Dialog>
             )}
           
-          <Separator className="my-4" />
-
-          <div>
-            <h3 className="text-xl font-semibold mb-2">Product Description</h3>
-            <p className="text-muted-foreground leading-relaxed">{product.description}</p>
-          </div>
-
+            <Accordion type="single" collapsible className="w-full">
+                <AccordionItem value="description">
+                    <AccordionTrigger>Product Description</AccordionTrigger>
+                    <AccordionContent>
+                    {product.description}
+                    </AccordionContent>
+                </AccordionItem>
+                <AccordionItem value="fabric">
+                    <AccordionTrigger>Fabric & Care</AccordionTrigger>
+                    <AccordionContent>
+                    100% Premium Giza Cotton. Machine wash cold, gentle cycle. Do not bleach. Tumble dry low.
+                    </AccordionContent>
+                </AccordionItem>
+                 <AccordionItem value="size">
+                    <AccordionTrigger>Size & Fit</AccordionTrigger>
+                    <AccordionContent>
+                    Model is 6'0" and wearing a size Medium. Regular fit.
+                    </AccordionContent>
+                </AccordionItem>
+            </Accordion>
+        </div>
+      </div>
+      <div className="mt-16">
+        <h2 className="text-2xl font-bold text-center mb-8">You may also like</h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+            {similarProducts.map((p) => <ProductCard key={p.id} product={p} />)}
         </div>
       </div>
     </div>

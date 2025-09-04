@@ -44,31 +44,31 @@ export function Footer() {
     <footer className="bg-accent text-accent-foreground">
       <div className="container mx-auto grid max-w-7xl grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8 px-4 py-12 md:px-6">
         <div className="flex flex-col gap-4">
-            <h3 className="font-semibold">NEED HELP?</h3>
+            <h3 className="font-semibold">Quick Links</h3>
             <div className="grid gap-2 text-sm">
-                <Link href="#" className="hover:underline text-accent-foreground/80">Contact Us</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">Track Order</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">Returns & Refunds</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">FAQ's</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Home</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Shop</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">About</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Contact</Link>
             </div>
         </div>
         <div className="grid gap-1 text-sm">
-            <h3 className="font-semibold">COMPANY</h3>
+            <h3 className="font-semibold">Information</h3>
              <div className="grid gap-2 text-sm">
-                <Link href="#" className="hover:underline text-accent-foreground/80">About Us</Link>
-                <Link href="/tailor/register" className="hover:underline text-accent-foreground/80">Become a Tailor</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">Careers</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Shipping Policy</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Refund Policy</Link>
+                <Link href="#" className="hover:underline text-accent-foreground/80">Terms of Service</Link>
             </div>
         </div>
         <div className="grid gap-1 text-sm">
-             <h3 className="font-semibold">MORE INFO</h3>
+             <h3 className="font-semibold">Contact Us</h3>
              <div className="grid gap-2 text-sm">
-                <Link href="#" className="hover:underline text-accent-foreground/80">Terms and Conditions</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">Privacy Policy</Link>
+                <p className="text-accent-foreground/80">support@fitique.com</p>
              </div>
         </div>
         <div className="flex flex-col gap-4">
-          <h3 className="font-semibold">STAY UP TO DATE</h3>
+          <h3 className="font-semibold">Newsletter</h3>
+          <p className="text-accent-foreground/80 text-sm">Subscribe to receive updates, access to exclusive deals, and more.</p>
           <form className="flex gap-2">
             <Input
               type="email"

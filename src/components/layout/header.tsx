@@ -24,10 +24,11 @@ function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
 
 export function Header() {
   const navLinks = [
-    { href: '/products', label: 'Men' },
-    { href: '/products', label: 'Women' },
-    { href: '/products', label: 'Kids' },
-    { href: '/products', label: 'Accessories' },
+    { href: '/products', label: 'SHOP' },
+    { href: '/products', label: 'NEW ARRIVALS' },
+    { href: '/products', label: 'GIFTING' },
+    { href: '/tailor/register', label: 'BECOME A TAILOR' },
+
   ];
 
   return (

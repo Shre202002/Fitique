@@ -41,10 +41,10 @@ export default function Home() {
                         <div className="container px-4 md:px-6 z-10">
                             <div className="grid gap-6 text-white">
                                 <h1 className="text-4xl font-bold tracking-tighter sm:text-5xl md:text-6xl lg:text-7xl font-headline">
-                                    Summer Collection
+                                    The Cambridge
                                 </h1>
                                 <p className="max-w-[600px] mx-auto md:text-xl">
-                                    Light, breezy, and effortlessly stylish.
+                                    Giza Cotton Shirt In Teal
                                 </p>
                                 <div>
                                     <Button size="lg" variant="secondary">
@@ -86,36 +86,13 @@ export default function Home() {
         </Carousel>
       </section>
       
-      <section className="py-12 md:py-16">
-        <div className="container px-4 md:px-6">
-           <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
-            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline text-accent">
-                Shop by Category
-            </h2>
-          </div>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-6 justify-center">
-            {categories.map((category) => (
-                <Link href={category.href} key={category.name} className="group flex flex-col items-center gap-3">
-                    <div className="w-32 h-32 rounded-full overflow-hidden border-2 border-transparent group-hover:border-primary transition-all">
-                        <Image src={category.image} alt={category.name} width={128} height={128} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300" data-ai-hint="fashion category"/>
-                    </div>
-                    <span className="font-semibold text-accent group-hover:text-primary transition-colors">{category.name}</span>
-                </Link>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="py-12 md:py-16 bg-muted/50">
         <div className="container px-4 md:px-6">
           <div className="flex justify-between items-center">
             <div className="space-y-2">
               <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl font-headline text-accent">
-                Trending Now
+                Best Sellers
               </h2>
-              <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                Handpicked styles and trending designs, curated just for you.
-              </p>
             </div>
              <Link href="/products">
                 <Button size="lg" variant="outline">
@@ -128,30 +105,6 @@ export default function Home() {
               <ProductCard key={product.id} product={product} />
             ))}
           </div>
-        </div>
-      </section>
-      
-      <section className="py-12 md:py-16">
-        <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center mb-10">
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl font-headline text-accent">
-                    Shop by Collection
-                </h2>
-            </div>
-            <div className="grid md:grid-cols-2 gap-6">
-                <Link href="/products" className="group relative block w-full h-80 rounded-lg overflow-hidden">
-                    <Image src="https://picsum.photos/800/400?image=1051" alt="Formal Collection" fill className="object-cover group-hover:scale-105 transition-transform duration-300" data-ai-hint="formal suits"/>
-                     <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <h3 className="text-3xl font-bold text-white font-headline">Formal Wear</h3>
-                    </div>
-                </Link>
-                <Link href="/products" className="group relative block w-full h-80 rounded-lg overflow-hidden">
-                    <Image src="https://picsum.photos/800/400?image=1071" alt="Casual Collection" fill className="object-cover group-hover:scale-105 transition-transform duration-300" data-ai-hint="casual fashion"/>
-                    <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                        <h3 className="text-3xl font-bold text-white font-headline">Everyday Essentials</h3>
-                    </div>
-                </Link>
-            </div>
         </div>
       </section>
     </div>
