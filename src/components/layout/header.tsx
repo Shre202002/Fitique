@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/context/cart-context';
 import { useState, useEffect } from 'react';
+import { usePathname } from 'next/navigation';
 
 function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -31,19 +32,28 @@ export function Header() {
   const { cartItems } = useCart();
   const [isClient, setIsClient] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const pathname = usePathname();
+  const isHomePage = pathname === '/';
 
   useEffect(() => {
     setIsClient(true);
+
+    if (!isHomePage) {
+      setIsScrolled(true);
+      return;
+    }
 
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
     window.addEventListener('scroll', handleScroll);
+    handleScroll(); 
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, []);
+  }, [isHomePage]);
   
   const totalQuantity = isClient ? cartItems.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
@@ -63,8 +73,12 @@ export function Header() {
     { href: '/tailor/register', label: 'BECOME A TAILOR' },
   ]
 
+  const headerClasses = `sticky top-0 z-50 w-full transition-colors duration-300 ${
+    isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
+  }`;
+
   return (
-    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'}`}>
+    <header className={headerClasses}>
       <div className={`py-2 text-center text-sm px-4 overflow-x-auto whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
         <span className="inline-block mx-4">Buy 3 Shirts, Get 15% Off!</span>
         <span className="hidden sm:inline-block mx-4">Buy 2 Shirts, Get 10% Off!</span>
