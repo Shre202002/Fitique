@@ -35,9 +35,26 @@ function CustomSizeForm({ product }: { product: Product }) {
     const { addItem } = useCart();
     const { toast } = useToast();
     const [isCustomSizeOpen, setCustomSizeOpen] = useState(false);
+    const [measurements, setMeasurements] = useState({
+        height: '', chest: '', waist: '', hips: '', neck: '', shoulder: ''
+    });
+
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setMeasurements({ ...measurements, [e.target.id]: e.target.value });
+    };
+
+    const allFieldsFilled = Object.values(measurements).every(val => val.trim() !== '');
 
     const handleCustomSizeSubmit = (e: React.FormEvent) => {
         e.preventDefault();
+        if (!allFieldsFilled) {
+            toast({
+                title: "Incomplete Form",
+                description: "Please fill out all measurement fields.",
+                variant: "destructive",
+            });
+            return;
+        }
         addItem({ product, quantity: 1, size: 'Custom', isCustom: true });
         setCustomSizeOpen(false);
         toast({
@@ -49,7 +66,7 @@ function CustomSizeForm({ product }: { product: Product }) {
     return (
         <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
             <DialogTrigger asChild>
-                <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black text-base">AI Size Helper</Button>
+                 <Button size="lg" variant="outline" className="w-full text-base">Custom Size</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
@@ -61,30 +78,31 @@ function CustomSizeForm({ product }: { product: Product }) {
                 <form onSubmit={handleCustomSizeSubmit} className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="height" className="text-right">Height (cm)</Label>
-                        <Input id="height" placeholder="e.g. 178" className="col-span-3" />
+                        <Input id="height" value={measurements.height} onChange={handleInputChange} placeholder="e.g. 178" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="chest" className="text-right">Chest (cm)</Label>
-                        <Input id="chest" placeholder="e.g. 102" className="col-span-3" />
+                        <Input id="chest" value={measurements.chest} onChange={handleInputChange} placeholder="e.g. 102" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="waist" className="text-right">Waist (cm)</Label>
-                        <Input id="waist" placeholder="e.g. 81" className="col-span-3" />
+                        <Input id="waist" value={measurements.waist} onChange={handleInputChange} placeholder="e.g. 81" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="hips" className="text-right">Hips (cm)</Label>
-                        <Input id="hips" placeholder="e.g. 106" className="col-span-3" />
+                        <Input id="hips" value={measurements.hips} onChange={handleInputChange} placeholder="e.g. 106" className="col-span-3" />
                     </div>
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="neck" className="text-right">Neck (cm)</Label>
-                        <Input id="neck" placeholder="e.g. 40" className="col-span-3" />
+                        <Input id="neck" value={measurements.neck} onChange={handleInputChange} placeholder="e.g. 40" className="col-span-3" />
                     </div>
                      <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="shoulder" className="text-right">Shoulder (cm)</Label>
-                        <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
+                        <Input id="shoulder" value={measurements.shoulder} onChange={handleInputChange} placeholder="e.g. 48" className="col-span-3" />
                     </div>
-                    <DialogFooter>
-                         <Button type="submit">Save and choose your stitcher</Button>
+                    <DialogFooter className="sm:justify-start gap-2">
+                         <Button type="submit" disabled={!allFieldsFilled}>Save & Add to Cart</Button>
+                         <Button type="button" variant="secondary" className="bg-yellow-400 hover:bg-yellow-500 text-black">Virtual Tailor</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
@@ -99,7 +117,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   const similarProducts = getFeaturedProducts().filter(p => p.id !== product.id).slice(0, 4);
   const originalPrice = product.price * 1.25;
-  const { addItem } = useCart();
+  const { cartItems, addItem } = useCart();
 
 
   const handleAddToCart = () => {
@@ -208,13 +226,13 @@ export function ProductDetailClient({ product }: { product: Product }) {
           
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
             <Button size="lg" className="flex-1 text-base" onClick={handleAddToCart}>Add to Cart</Button>
-            <Button size="lg" variant="ghost" className="flex-1 text-base border border-primary gap-2">
-                <Heart className="w-5 h-5"/> Wishlist
-            </Button>
-          </div>
             {product.stitchingEnabled && (
                 <CustomSizeForm product={product} />
             )}
+            <Button size="lg" variant="ghost" className="flex-1 text-base border border-input gap-2">
+                <Heart className="w-5 h-5"/> Wishlist
+            </Button>
+          </div>
           
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="description">

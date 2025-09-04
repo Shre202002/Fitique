@@ -1,8 +1,6 @@
 import { notFound } from 'next/navigation';
-import type { Product } from '@/types';
 import { getAllProducts, getProductById } from '@/lib/data';
 import { ProductDetailClient } from './product-detail-client';
-
 
 export function generateStaticParams() {
   const products = getAllProducts();
