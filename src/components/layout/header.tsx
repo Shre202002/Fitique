@@ -1,7 +1,11 @@
+
+"use client";
+
 import Link from 'next/link';
 import { ShoppingCart, User, Heart, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { useCart } from '@/context/cart-context';
 
 function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -23,12 +27,14 @@ function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
 }
 
 export function Header() {
+  const { cartItems } = useCart();
+  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+
   const navLinks = [
     { href: '/products', label: 'SHOP' },
     { href: '/products', label: 'NEW ARRIVALS' },
     { href: '/products', label: 'GIFTING' },
     { href: '/tailor/register', label: 'BECOME A TAILOR' },
-
   ];
 
   return (
@@ -64,7 +70,12 @@ export function Header() {
             </Button>
           </Link>
           <Link href="/cart">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className="relative">
+              {totalQuantity > 0 && (
+                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  {totalQuantity}
+                </span>
+              )}
               <ShoppingCart className="h-5 w-5" />
               <span className="sr-only">Cart</span>
             </Button>
