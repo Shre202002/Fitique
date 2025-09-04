@@ -30,6 +30,7 @@ import { useToast } from '@/hooks/use-toast';
 import { ProductCard } from '@/components/product-card';
 import { getFeaturedProducts } from '@/lib/data';
 import { useCart } from '@/context/cart-context';
+import { useRouter } from 'next/navigation';
 
 function CustomSizeForm({ product }: { product: Product }) {
     const { addItem } = useCart();
@@ -112,6 +113,7 @@ function CustomSizeForm({ product }: { product: Product }) {
 
 export function ProductDetailClient({ product }: { product: Product }) {
   const { toast } = useToast();
+  const router = useRouter();
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
@@ -127,6 +129,11 @@ export function ProductDetailClient({ product }: { product: Product }) {
       description: `${product.name} has been added to your cart.`,
       action: <Check className="h-5 w-5 text-green-500" />,
     });
+  };
+
+  const handleBuyNow = () => {
+    addItem({ product, quantity, size: selectedSize, isCustom: false });
+    router.push('/checkout');
   };
 
   return (
@@ -232,7 +239,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <Button size="lg" variant="ghost" className="text-base border border-input gap-2">
                 <Heart className="w-5 h-5"/> Wishlist
             </Button>
-            <Button size="lg" className="text-base">Buy Now</Button>
+            <Button size="lg" className="text-base" onClick={handleBuyNow}>Buy Now</Button>
           </div>
           
             <Accordion type="single" collapsible className="w-full">
@@ -266,5 +273,3 @@ export function ProductDetailClient({ product }: { product: Product }) {
     </div>
   );
 }
-
-    
