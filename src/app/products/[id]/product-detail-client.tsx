@@ -64,6 +64,13 @@ function CustomSizeForm({ product }: { product: Product }) {
         });
     }
 
+    const handleVirtualTailorClick = () => {
+        toast({
+            title: "Coming Soon!",
+            description: "Our AI-powered Virtual Tailor will be available shortly.",
+        });
+    }
+
     return (
         <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
             <DialogTrigger asChild>
@@ -103,7 +110,7 @@ function CustomSizeForm({ product }: { product: Product }) {
                     </div>
                     <DialogFooter className="sm:justify-start gap-2">
                          <Button type="submit" disabled={!allFieldsFilled}>Save Measurements</Button>
-                         <Button type="button" variant="secondary" className="bg-yellow-400 hover:bg-yellow-500 text-black">Virtual Tailor</Button>
+                         <Button type="button" variant="secondary" className="bg-yellow-400 hover:bg-yellow-500 text-black" onClick={handleVirtualTailorClick}>Virtual Tailor</Button>
                     </DialogFooter>
                 </form>
             </DialogContent>
@@ -134,6 +141,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const handleBuyNow = () => {
     addItem({ product, quantity, size: selectedSize, isCustom: false });
     router.push('/checkout');
+  };
+
+  const handleWishlistClick = () => {
+    toast({
+        title: "Added to Wishlist!",
+        description: `${product.name} has been saved to your wishlist.`,
+        action: <Heart className="h-5 w-5 text-pink-500" />,
+    });
   };
 
   return (
@@ -236,7 +251,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             {product.stitchingEnabled && (
                 <CustomSizeForm product={product} />
             )}
-            <Button size="lg" variant="ghost" className="text-base border border-input gap-2">
+            <Button size="lg" variant="ghost" className="text-base border border-input gap-2" onClick={handleWishlistClick}>
                 <Heart className="w-5 h-5"/> Wishlist
             </Button>
             <Button size="lg" className="text-base" onClick={handleBuyNow}>Buy Now</Button>
