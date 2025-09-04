@@ -58,8 +58,20 @@
 }
 
 @layer utilities {
-  @keyframes marquee {
-    from { transform: translateX(0); }
-    to { transform: translateX(-50%); }
-  }
+    .fade-carousel .slick-slide {
+        opacity: 0;
+        transition: opacity 0.5s ease-in-out;
+    }
+    .fade-carousel .slick-active {
+        opacity: 1;
+    }
+    .fade-carousel .f-carousel__slide {
+        transition: opacity 1s, visibility 1s;
+        opacity: 0;
+        visibility: hidden;
+    }
+    .fade-carousel .f-carousel__slide.is-selected {
+        opacity: 1;
+        visibility: visible;
+    }
 }
