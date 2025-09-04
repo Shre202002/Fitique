@@ -1,10 +1,14 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import type { Product } from '@/types';
 import { Card, CardContent, CardFooter } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { Star, Heart } from 'lucide-react';
+import { Star, Heart, Check } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
+import { useCart } from '@/context/cart-context';
+import { useToast } from '@/hooks/use-toast';
 
 
 interface ProductCardProps {
@@ -13,6 +17,17 @@ interface ProductCardProps {
 
 export function ProductCard({ product }: ProductCardProps) {
   const originalPrice = product.price * 1.25;
+  const { addItem } = useCart();
+  const { toast } = useToast();
+
+  const handleAddToCart = () => {
+    addItem({ product, quantity: 1, size: product.sizes[0], isCustom: false });
+    toast({
+      title: "Added to cart!",
+      description: `${product.name} has been added to your cart.`,
+      action: <Check className="h-5 w-5 text-green-500" />,
+    });
+  };
 
   return (
     <Card className="w-full max-w-sm rounded-lg overflow-hidden group border-border/80 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col bg-card">
@@ -49,7 +64,7 @@ export function ProductCard({ product }: ProductCardProps) {
         </CardContent>
       </Link>
        <CardFooter className="p-4 pt-0">
-        <Button className="w-full">Add to Cart</Button>
+        <Button className="w-full" onClick={handleAddToCart}>Add to Cart</Button>
       </CardFooter>
     </Card>
   );
