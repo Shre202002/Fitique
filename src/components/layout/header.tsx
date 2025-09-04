@@ -63,7 +63,7 @@ export function Header() {
   ];
 
   // Dynamically sets header classes based on scroll state for transparency effect.
-  const headerClasses = `absolute top-0 z-50 w-full transition-colors duration-300 ${
+  const headerClasses = `sticky top-0 z-50 w-full transition-colors duration-300 ${
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
   }`;
   
