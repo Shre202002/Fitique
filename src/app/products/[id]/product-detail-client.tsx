@@ -162,7 +162,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
   // State for the currently displayed image in the gallery.
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
   // Fetches similar products to display at the bottom of the page.
-  const similarProducts = getFeaturedProducts().filter(p => p.id !== product.id).slice(0, 4);
+  const similarProducts = getFeaturedProducts(product.id).slice(0, 4);
   // Example of calculating a discounted price.
   const originalPrice = product.price * 1.25;
   // Imports addItem function from the cart context.
@@ -350,3 +350,5 @@ export function ProductDetailClient({ product }: { product: Product }) {
     </div>
   );
 }
+
+    

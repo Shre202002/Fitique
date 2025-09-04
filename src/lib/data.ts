@@ -221,6 +221,12 @@ export function getProductById(id: string): Product | undefined {
   return products.find((p) => p.id === id);
 }
 
-export function getFeaturedProducts(): Product[] {
-  return products.filter((p) => p.isFeatured);
+export function getFeaturedProducts(excludeId?: string): Product[] {
+  let featured = products.filter((p) => p.isFeatured);
+  if (excludeId) {
+    featured = featured.filter((p) => p.id !== excludeId);
+  }
+  return featured;
 }
+
+    
