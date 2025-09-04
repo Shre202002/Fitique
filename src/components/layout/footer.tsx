@@ -1,3 +1,4 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -46,10 +47,11 @@ export function Footer() {
         <div className="flex flex-col gap-4">
             <h3 className="font-semibold">Quick Links</h3>
             <div className="grid gap-2 text-sm">
-                <Link href="#" className="hover:underline text-accent-foreground/80">Home</Link>
-                <Link href="#" className="hover:underline text-accent-foreground/80">Shop</Link>
+                <Link href="/" className="hover:underline text-accent-foreground/80">Home</Link>
+                <Link href="/products" className="hover:underline text-accent-foreground/80">Shop</Link>
                 <Link href="#" className="hover:underline text-accent-foreground/80">About</Link>
                 <Link href="#" className="hover:underline text-accent-foreground/80">Contact</Link>
+                <Link href="/tailor/register" className="hover:underline text-accent-foreground/80">Become a Tailor</Link>
             </div>
         </div>
         <div className="grid gap-1 text-sm">
