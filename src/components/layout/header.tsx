@@ -101,29 +101,8 @@ export function Header() {
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
   }`;
   
-  // Content for the scrolling announcement bar.
-  const announcementContent = [
-    "Buy 3 Shirts, Get 15% Off!",
-    "Buy 2 Shirts, Get 10% Off!",
-    "Buy 1 Shirt, Get 5% Off!",
-  ];
-
   return (
     <header className={headerClasses}>
-      {/* Announcement bar with a marquee/scrolling effect */}
-       <div className={`py-2 text-center text-sm px-4 overflow-hidden whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
-        {/* The animation-marquee class applies the continuous scroll effect. */}
-        <div className="animate-marquee flex">
-          {/* Content is duplicated to create a seamless loop. */}
-          <span className="inline-block mx-4">{announcementContent[0]}</span>
-          <span className="inline-block mx-4">{announcementContent[1]}</span>
-          <span className="inline-block mx-4">{announcementContent[2]}</span>
-          <span className="inline-block mx-4">{announcementContent[0]}</span>
-          <span className="inline-block mx-4">{announcementContent[1]}</span>
-          <span className="inline-block mx-4">{announcementContent[2]}</span>
-        </div>
-      </div>
-      
       <div className="container flex h-16 max-w-7xl items-center justify-between">
         {/* Mobile Menu Trigger (Hamburger Icon) */}
         <Sheet>
