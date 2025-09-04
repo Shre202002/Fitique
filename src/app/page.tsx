@@ -5,6 +5,13 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/product-card';
 import { getFeaturedProducts } from '@/lib/data';
 import Image from 'next/image';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
+import React from 'react';
 
 const categories = [
     { name: 'Shirts', image: 'https://picsum.photos/300/300?image=1003', href: '/products' },
@@ -32,34 +39,72 @@ const features = [
     }
 ]
 
+const heroSlides = [
+    {
+        image: "https://picsum.photos/1600/900?image=838",
+        alt: "Man in a stylish suit",
+        title: "ELEVATE YOUR STYLE",
+        description: "Discover our premium collection of formal wear, crafted for the modern individual.",
+        buttonText: "Shop Collection",
+        dataAiHint: "formal wear",
+    },
+    {
+        image: "https://picsum.photos/1600/900?image=1025",
+        alt: "Close up of a shirt",
+        title: "METICULOUSLY CRAFTED",
+        description: "Experience the difference of high-quality fabrics and expert tailoring.",
+        buttonText: "Explore Fabrics",
+        dataAiHint: "clothing fabric",
+    },
+    {
+        image: "https://picsum.photos/1600/900?image=1005",
+        alt: "Man wearing a casual shirt",
+        title: "CASUAL ELEGANCE",
+        description: "Effortless style for every day. Find your perfect fit with our custom options.",
+        buttonText: "View Casual Wear",
+        dataAiHint: "casual fashion",
+    },
+];
+
 export default function Home() {
   const featuredProducts = getFeaturedProducts();
+  const autoplay = React.useRef(Autoplay({ delay: 4000, stopOnInteraction: false }))
 
   return (
     <div className="flex flex-col bg-background">
       <section className="relative w-full h-[80vh] md:h-screen text-white -mt-[160px]">
-        <div className="relative w-full h-full">
-            <Image 
-                src="https://picsum.photos/1600/900?image=838" 
-                alt="Man in a stylish suit" 
-                fill 
-                className="object-cover"
-                data-ai-hint="formal wear"
-                priority
-            />
-            <div className="absolute inset-0 bg-black/40" />
-            <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
-                <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-                    ELEVATE YOUR STYLE
-                </h1>
-                <p className="mt-4 text-lg md:text-xl max-w-md">
-                    Discover our premium collection of formal wear, crafted for the modern individual.
-                </p>
-                <Button size="lg" variant="secondary" className="mt-6">
-                    Shop Collection
-                </Button>
-            </div>
-        </div>
+        <Carousel 
+            className="w-full h-full embla-fade" 
+            plugins={[autoplay.current]}
+            opts={{ loop: true }}
+        >
+            <CarouselContent className="h-full">
+                {heroSlides.map((slide, index) => (
+                    <CarouselItem key={index} className="h-full relative">
+                         <Image 
+                            src={slide.image}
+                            alt={slide.alt} 
+                            fill
+                            className="object-cover object-center"
+                            data-ai-hint={slide.dataAiHint}
+                            priority={index === 0}
+                        />
+                        <div className="absolute inset-0 bg-black/40" />
+                        <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
+                            <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
+                                {slide.title}
+                            </h1>
+                            <p className="mt-4 text-lg md:text-xl max-w-md">
+                                {slide.description}
+                            </p>
+                            <Button size="lg" variant="secondary" className="mt-6">
+                                {slide.buttonText}
+                            </Button>
+                        </div>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+        </Carousel>
       </section>
 
       <section className="py-12 md:py-16">

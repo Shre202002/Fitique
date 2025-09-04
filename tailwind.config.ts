@@ -1,4 +1,5 @@
 import type {Config} from 'tailwindcss';
+import plugin from 'tailwindcss/plugin';
 
 export default {
   darkMode: ['class'],
@@ -107,5 +108,19 @@ export default {
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [
+    require('tailwindcss-animate'),
+    plugin(function ({ addUtilities }) {
+      addUtilities({
+        '.embla-fade .embla__container': {
+          display: 'flex',
+          height: '100%',
+        },
+        '.embla-fade .embla__slide': {
+          flex: '0 0 100%',
+          position: 'relative',
+        },
+      });
+    }),
+  ],
 } satisfies Config;
