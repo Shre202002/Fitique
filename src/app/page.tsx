@@ -43,25 +43,25 @@ const features = [
 
 const heroSlides = [
     {
-        image: "https://picsum.photos/1600/900?image=1003",
-        alt: "Hero background 1",
-        title: "CELEBRATE FREEDOM",
-        description: "From uncomfortable, flimsy, and synthetic clothing. Switch to 100% natural fabrics.",
-        dataAiHint: "male model"
+        image: "https://picsum.photos/1600/900?image=838",
+        alt: "Man in a stylish suit",
+        title: "ELEVATE YOUR STYLE",
+        description: "Discover our premium collection of formal wear, crafted for the modern individual.",
+        dataAiHint: "formal wear"
     },
     {
-        image: "https://picsum.photos/1600/900?image=1041",
-        alt: "Hero background 2",
+        image: "https://picsum.photos/1600/900?image=839",
+        alt: "Close-up of a tailored shirt",
         title: "UNMATCHED COMFORT",
         description: "Experience the luxury of custom-fit clothing designed just for you.",
-        dataAiHint: "fabric texture"
+        dataAiHint: "tailored shirt"
     },
     {
-        image: "https://picsum.photos/1600/900?image=1025",
-        alt: "Hero background 3",
+        image: "https://picsum.photos/1600/900?image=841",
+        alt: "A collection of new arrivals",
         title: "NEW ARRIVALS",
         description: "Discover our latest collection of premium shirts and trousers.",
-        dataAiHint: "clothing collection"
+        dataAiHint: "clothing display"
     },
 ]
 
