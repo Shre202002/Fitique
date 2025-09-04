@@ -10,6 +10,7 @@ import { useState } from 'react';
 
 const initialCartItems = [
   { id: 1, productId: 'classic-blue-denim', name: 'Classic Blue Denim Jacket', price: 89.99, quantity: 1, size: 'M', image: 'https://placehold.co/100x100.png', isCustom: false },
+  { id: 2, productId: 'summer-floral-dress', name: 'Summer Floral Maxi Dress', price: 120.00, quantity: 1, size: 'Custom', image: '', isCustom: true },
 ];
 
 export default function CartPage() {
@@ -59,12 +60,12 @@ export default function CartPage() {
                     <div>
                     <h3 className="font-semibold text-lg">{item.name}</h3>
                     <p className="text-sm text-muted-foreground">
-                        {item.isCustom ? `Custom Fit (Ref: ${item.productId})` : `Size: ${item.size}`}
+                        {item.isCustom ? `Custom Fit` : `Size: ${item.size}`}
                     </p>
                     {item.isCustom && <Link href={`/products/${item.productId}`} className="text-sm text-primary hover:underline">Edit measurements</Link>}
                     </div>
                     <div className="flex items-center justify-between mt-auto pt-2">
-                    <p className="font-bold text-lg text-primary">${item.price.toFixed(2)}</p>
+                    <p className="font-bold text-lg text-primary">₹{item.price.toFixed(2)}</p>
                     {!item.isCustom && (
                         <div className="flex items-center gap-2 border rounded-md">
                             <Button variant="ghost" size="icon" className="h-8 w-8" onClick={() => handleDecreaseQuantity(item.id)}><Minus className="h-4 w-4" /></Button>
@@ -84,16 +85,16 @@ export default function CartPage() {
             <h2 className="text-xl font-semibold">Order Summary</h2>
             <div className="flex justify-between text-muted-foreground">
                 <span>Subtotal</span>
-                <span>${subtotal.toFixed(2)}</span>
+                <span>₹{subtotal.toFixed(2)}</span>
             </div>
             <div className="flex justify-between text-muted-foreground">
                 <span>Shipping</span>
-                <span>${shipping.toFixed(2)}</span>
+                <span>₹{shipping.toFixed(2)}</span>
             </div>
             <Separator />
             <div className="flex justify-between font-bold text-lg">
                 <span>Total</span>
-                <span>${total.toFixed(2)}</span>
+                <span>₹{total.toFixed(2)}</span>
             </div>
             <Link href="/checkout" className="w-full">
                 <Button className="w-full" size="lg">Proceed to Checkout</Button>
