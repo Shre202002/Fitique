@@ -183,13 +183,13 @@ export default function AccountPage() {
                 {/* Mobile Navigation Tabs */}
                 <div className="md:hidden">
                     <div className="border-b">
-                        <nav className="-mb-px flex space-x-2 sm:space-x-4 overflow-x-auto" aria-label="Tabs">
+                        <nav className="-mb-px flex space-x-2 overflow-x-auto" aria-label="Tabs">
                             {navItems.map(item => (
                                 <button
                                     key={item.id}
                                     onClick={() => setActiveTab(item.id as ActiveTab)}
                                     className={cn(
-                                        'group inline-flex items-center gap-2 py-4 px-2 sm:px-4 border-b-2 font-medium text-sm whitespace-nowrap',
+                                        'group inline-flex items-center gap-2 py-4 px-2 sm:px-3 border-b-2 font-medium text-sm whitespace-nowrap',
                                         activeTab === item.id
                                             ? 'border-primary text-primary'
                                             : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
@@ -218,5 +218,3 @@ export default function AccountPage() {
         </div>
     );
 }
-
-    
