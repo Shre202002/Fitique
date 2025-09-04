@@ -4,7 +4,7 @@
 import Link from 'next/link';
 import { ShoppingCart, User, Heart, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/context/cart-context';
 import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
@@ -113,6 +113,9 @@ export function Header() {
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
+               <SheetHeader>
+                  <SheetTitle className="sr-only">Main Menu</SheetTitle>
+                </SheetHeader>
               <div className="flex flex-col gap-6 p-6 bg-background text-foreground h-full">
                 <Link href="/" className="flex items-center gap-2 mb-6">
                   <MountainIcon className="h-6 w-6 text-primary" />
