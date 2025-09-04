@@ -1,4 +1,5 @@
 
+"use client"
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/product-card';
@@ -8,9 +9,11 @@ import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    CarouselNext,
-    CarouselPrevious,
+    type CarouselApi,
 } from "@/components/ui/carousel"
+import { useEffect, useRef, useState } from 'react';
+import Autoplay from "embla-carousel-autoplay"
+
 
 const categories = [
     { name: 'Shirts', image: 'https://picsum.photos/300/300?image=1003', href: '/products' },
@@ -64,14 +67,46 @@ const heroSlides = [
 
 export default function Home() {
   const featuredProducts = getFeaturedProducts();
+  const [api, setApi] = useState<CarouselApi>()
+  const [current, setCurrent] = useState(0)
+  
+  const plugin = useRef(
+    Autoplay({ delay: 4000, stopOnInteraction: true })
+  )
+
+  useEffect(() => {
+    if (!api) {
+      return
+    }
+ 
+    setCurrent(api.selectedScrollSnap())
+ 
+    const onSelect = (api: CarouselApi) => {
+      setCurrent(api.selectedScrollSnap())
+    }
+
+    api.on("select", onSelect)
+ 
+    return () => {
+      api.off("select", onSelect)
+    }
+  }, [api])
+
 
   return (
     <div className="flex flex-col bg-background">
       <section className="relative w-full h-[80vh] md:h-screen text-white -mt-[160px]">
-        <Carousel className="w-full h-full" opts={{ loop: true }}>
-            <CarouselContent>
+        <Carousel 
+            className="w-full h-full overflow-hidden" 
+            opts={{ loop: true }}
+            plugins={[plugin.current]}
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+            setApi={setApi}
+        >
+            <CarouselContent className="-ml-0">
                 {heroSlides.map((slide, index) => (
-                    <CarouselItem key={index}>
+                    <CarouselItem key={index} className="pl-0 relative transition-opacity duration-1000" style={{ opacity: index === current ? 1 : 0}}>
                         <div className="relative w-full h-[80vh] md:h-screen">
                              <Image 
                                 src={slide.image} 
@@ -82,7 +117,7 @@ export default function Home() {
                                 priority={index === 0}
                             />
                             <div className="absolute inset-0 bg-black/40" />
-                            <div className="relative container mx-auto h-full flex flex-col items-start justify-center px-4 md:px-6 z-10">
+                            <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
                                 <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
                                     {slide.title}
                                 </h1>
@@ -97,8 +132,15 @@ export default function Home() {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white bg-white/20 hover:bg-white/30 border-white/50" />
-            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white bg-white/20 hover:bg-white/30 border-white/50" />
+             <div className="absolute bottom-8 right-8 z-10 flex gap-2">
+                {heroSlides.map((_, i) => (
+                <button
+                    key={i}
+                    onClick={() => api?.scrollTo(i)}
+                    className={`w-2 h-2 rounded-full transition-all ${current === i ? 'p-1.5 bg-white' : 'bg-white/50'}`}
+                />
+                ))}
+            </div>
         </Carousel>
       </section>
 
