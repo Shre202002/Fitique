@@ -6,16 +6,8 @@ import { ShoppingCart, User, Heart, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/context/cart-context';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    type CarouselApi,
-} from "@/components/ui/carousel"
-import Autoplay from "embla-carousel-autoplay"
-
 
 function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
@@ -43,10 +35,6 @@ export function Header() {
   const pathname = usePathname();
   const isHomePage = pathname === '/';
   
-  const plugin = useRef(
-    Autoplay({ delay: 3000, stopOnInteraction: false })
-  )
-
   useEffect(() => {
     setIsClient(true);
 
@@ -96,23 +84,16 @@ export function Header() {
 
   return (
     <header className={headerClasses}>
-      <div className={`py-2 text-center text-sm px-4 overflow-hidden whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
-        <Carousel
-          plugins={[plugin.current]}
-          className="w-full max-w-xs mx-auto"
-          opts={{
-            loop: true,
-            align: "start"
-          }}
-        >
-          <CarouselContent className="fade-carousel">
-            {announcementContent.map((text, index) => (
-              <CarouselItem key={index}>
-                <div className="p-1">{text}</div>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-        </Carousel>
+       <div className={`py-2 text-center text-sm px-4 overflow-hidden whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
+        <div className="animate-marquee flex">
+          <span className="inline-block mx-4">{announcementContent[0]}</span>
+          <span className="inline-block mx-4">{announcementContent[1]}</span>
+          <span className="inline-block mx-4">{announcementContent[2]}</span>
+          {/* Duplicate for seamless scroll */}
+          <span className="inline-block mx-4">{announcementContent[0]}</span>
+          <span className="inline-block mx-4">{announcementContent[1]}</span>
+          <span className="inline-block mx-4">{announcementContent[2]}</span>
+        </div>
       </div>
       
       <div className="container flex h-16 max-w-7xl items-center justify-between">

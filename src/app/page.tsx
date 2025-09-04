@@ -5,15 +5,6 @@ import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/product-card';
 import { getFeaturedProducts } from '@/lib/data';
 import Image from 'next/image';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-    type CarouselApi,
-} from "@/components/ui/carousel"
-import { useEffect, useRef, useState } from 'react';
-import Autoplay from "embla-carousel-autoplay"
-
 
 const categories = [
     { name: 'Shirts', image: 'https://picsum.photos/300/300?image=1003', href: '/products' },
@@ -41,107 +32,34 @@ const features = [
     }
 ]
 
-const heroSlides = [
-    {
-        image: "https://picsum.photos/1600/900?image=838",
-        alt: "Man in a stylish suit",
-        title: "ELEVATE YOUR STYLE",
-        description: "Discover our premium collection of formal wear, crafted for the modern individual.",
-        dataAiHint: "formal wear"
-    },
-    {
-        image: "https://picsum.photos/1600/900?image=839",
-        alt: "Close-up of a tailored shirt",
-        title: "UNMATCHED COMFORT",
-        description: "Experience the luxury of custom-fit clothing designed just for you.",
-        dataAiHint: "tailored shirt"
-    },
-    {
-        image: "https://picsum.photos/1600/900?image=841",
-        alt: "A collection of new arrivals",
-        title: "NEW ARRIVALS",
-        description: "Discover our latest collection of premium shirts and trousers.",
-        dataAiHint: "clothing display"
-    },
-]
-
 export default function Home() {
   const featuredProducts = getFeaturedProducts();
-  const [api, setApi] = useState<CarouselApi>()
-  const [current, setCurrent] = useState(0)
-  
-  const plugin = useRef(
-    Autoplay({ delay: 4000, stopOnInteraction: true })
-  )
-
-  useEffect(() => {
-    if (!api) {
-      return
-    }
- 
-    setCurrent(api.selectedScrollSnap())
- 
-    const onSelect = (api: CarouselApi) => {
-      setCurrent(api.selectedScrollSnap())
-    }
-
-    api.on("select", onSelect)
- 
-    return () => {
-      api.off("select", onSelect)
-    }
-  }, [api])
-
 
   return (
     <div className="flex flex-col bg-background">
       <section className="relative w-full h-[80vh] md:h-screen text-white -mt-[160px]">
-        <Carousel 
-            className="w-full h-full overflow-hidden" 
-            opts={{ loop: true }}
-            plugins={[plugin.current]}
-            onMouseEnter={plugin.current.stop}
-            onMouseLeave={plugin.current.reset}
-            setApi={setApi}
-        >
-            <CarouselContent className="-ml-0">
-                {heroSlides.map((slide, index) => (
-                    <CarouselItem key={index} className="pl-0 relative transition-opacity duration-1000" style={{ opacity: index === current ? 1 : 0}}>
-                        <div className="relative w-full h-[80vh] md:h-screen">
-                             <Image 
-                                src={slide.image} 
-                                alt={slide.alt} 
-                                fill 
-                                className="object-cover"
-                                data-ai-hint={slide.dataAiHint}
-                                priority={index === 0}
-                            />
-                            <div className="absolute inset-0 bg-black/40" />
-                            <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
-                                <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-                                    {slide.title}
-                                </h1>
-                                <p className="mt-4 text-lg md:text-xl max-w-md">
-                                    {slide.description}
-                                </p>
-                                <Button size="lg" variant="secondary" className="mt-6">
-                                    Shop Collection
-                                </Button>
-                            </div>
-                        </div>
-                    </CarouselItem>
-                ))}
-            </CarouselContent>
-             <div className="absolute bottom-8 right-8 z-10 flex gap-2">
-                {heroSlides.map((_, i) => (
-                <button
-                    key={i}
-                    onClick={() => api?.scrollTo(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${current === i ? 'p-1.5 bg-white' : 'bg-white/50'}`}
-                />
-                ))}
+        <div className="relative w-full h-full">
+            <Image 
+                src="https://picsum.photos/1600/900?image=838" 
+                alt="Man in a stylish suit" 
+                fill 
+                className="object-cover"
+                data-ai-hint="formal wear"
+                priority
+            />
+            <div className="absolute inset-0 bg-black/40" />
+            <div className="relative container mx-auto h-full flex flex-col items-center justify-center text-center px-4 md:px-6 z-10">
+                <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
+                    ELEVATE YOUR STYLE
+                </h1>
+                <p className="mt-4 text-lg md:text-xl max-w-md">
+                    Discover our premium collection of formal wear, crafted for the modern individual.
+                </p>
+                <Button size="lg" variant="secondary" className="mt-6">
+                    Shop Collection
+                </Button>
             </div>
-        </Carousel>
+        </div>
       </section>
 
       <section className="py-12 md:py-16">
