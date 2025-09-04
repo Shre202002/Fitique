@@ -92,7 +92,8 @@ export function Header() {
   const mobileNavLinks = [
     { href: '/products', label: 'SHOP' },
     { href: '/products', label: 'NEW ARRIVALS' },
-    { href: '/products', label: 'GIFTING' },
+    { href: '/account', label: 'MY ACCOUNT' },
+    { href: '/account', label: 'WISHLIST' },
     { href: '/tailor/register', label: 'BECOME A TAILOR' },
   ]
 
@@ -149,8 +150,8 @@ export function Header() {
         </Link>
 
         {/* Header action icons */}
-        <div className="flex items-center gap-2">
-           <Link href="/account">
+        <div className="flex items-center gap-1 sm:gap-2">
+           <Link href="/account" className="hidden sm:block">
             <Button variant="ghost" size="icon" className="hover:bg-white/10">
               <Heart className="h-5 w-5" />
               <span className="sr-only">Wishlist</span>
@@ -160,7 +161,7 @@ export function Header() {
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
-           <Link href="/account">
+           <Link href="/account" className="hidden sm:block">
             <Button variant="ghost" size="icon" className="hover:bg-white/10">
               <User className="h-5 w-5" />
               <span className="sr-only">Account</span>
