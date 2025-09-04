@@ -30,9 +30,19 @@ function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
 export function Header() {
   const { cartItems } = useCart();
   const [isClient, setIsClient] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   useEffect(() => {
     setIsClient(true);
+
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
   
   const totalQuantity = isClient ? cartItems.reduce((acc, item) => acc + item.quantity, 0) : 0;
@@ -54,8 +64,8 @@ export function Header() {
   ]
 
   return (
-    <header className="sticky top-0 z-50 w-full bg-accent text-accent-foreground shadow-md">
-      <div className="bg-primary text-primary-foreground py-2 text-center text-sm px-4 overflow-x-auto whitespace-nowrap">
+    <header className={`sticky top-0 z-50 w-full transition-colors duration-300 ${isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'}`}>
+      <div className={`py-2 text-center text-sm px-4 overflow-x-auto whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
         <span className="inline-block mx-4">Buy 3 Shirts, Get 15% Off!</span>
         <span className="hidden sm:inline-block mx-4">Buy 2 Shirts, Get 10% Off!</span>
         <span className="hidden md:inline-block mx-4">Buy 1 Shirt, Get 5% Off!</span>
@@ -65,16 +75,16 @@ export function Header() {
         {/* Mobile Menu Trigger */}
         <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden hover:bg-accent/80">
+              <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
             <SheetContent side="left">
-              <div className="flex flex-col gap-6 p-6">
+              <div className="flex flex-col gap-6 p-6 bg-background text-foreground h-full">
                 <Link href="/" className="flex items-center gap-2 mb-6">
                   <MountainIcon className="h-6 w-6 text-primary" />
-                  <span className="text-xl font-bold text-foreground">Fitique</span>
+                  <span className="text-xl font-bold">Fitique</span>
                 </Link>
                 <nav className="flex flex-col gap-4">
                   {mobileNavLinks.map((link) => (
@@ -106,23 +116,23 @@ export function Header() {
 
         <div className="flex items-center gap-2">
            <Link href="/account">
-            <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+            <Button variant="ghost" size="icon" className="hover:bg-white/10">
               <Heart className="h-5 w-5" />
               <span className="sr-only">Wishlist</span>
             </Button>
           </Link>
-          <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+          <Button variant="ghost" size="icon" className="hover:bg-white/10">
             <Search className="h-5 w-5" />
             <span className="sr-only">Search</span>
           </Button>
            <Link href="/account">
-            <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+            <Button variant="ghost" size="icon" className="hover:bg-white/10">
               <User className="h-5 w-5" />
               <span className="sr-only">Account</span>
             </Button>
           </Link>
           <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative hover:bg-accent/80">
+            <Button variant="ghost" size="icon" className="relative hover:bg-white/10">
               {isClient && totalQuantity > 0 && (
                 <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   {totalQuantity}
@@ -135,13 +145,13 @@ export function Header() {
         </div>
       </div>
 
-       <nav className="hidden md:flex justify-center items-center h-12 border-t border-accent-foreground/10">
+       <nav className={`hidden md:flex justify-center items-center h-12 border-t transition-colors duration-300 ${isScrolled ? 'border-accent-foreground/10' : 'border-transparent'}`}>
           <div className="container flex justify-center gap-6 max-w-7xl">
             {mainNavLinks.map((link) => (
                 <Link
                 key={link.label}
                 href={link.href}
-                className="text-sm font-medium text-accent-foreground/80 transition-colors hover:text-accent-foreground"
+                className={`text-sm font-medium transition-colors ${isScrolled ? 'text-accent-foreground/80 hover:text-accent-foreground' : 'text-white/80 hover:text-white'}`}
                 >
                 {link.label}
                 </Link>

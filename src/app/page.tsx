@@ -1,9 +1,16 @@
+
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { ProductCard } from '@/components/product-card';
 import { getFeaturedProducts } from '@/lib/data';
 import Image from 'next/image';
-import { Separator } from '@/components/ui/separator';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+    CarouselNext,
+    CarouselPrevious,
+} from "@/components/ui/carousel"
 
 const categories = [
     { name: 'Shirts', image: 'https://picsum.photos/300/300?image=1003', href: '/products' },
@@ -31,31 +38,68 @@ const features = [
     }
 ]
 
+const heroSlides = [
+    {
+        image: "https://picsum.photos/1600/900?image=1003",
+        alt: "Hero background 1",
+        title: "CELEBRATE FREEDOM",
+        description: "From uncomfortable, flimsy, and synthetic clothing. Switch to 100% natural fabrics.",
+        dataAiHint: "male model"
+    },
+    {
+        image: "https://picsum.photos/1600/900?image=1041",
+        alt: "Hero background 2",
+        title: "UNMATCHED COMFORT",
+        description: "Experience the luxury of custom-fit clothing designed just for you.",
+        dataAiHint: "fabric texture"
+    },
+    {
+        image: "https://picsum.photos/1600/900?image=1025",
+        alt: "Hero background 3",
+        title: "NEW ARRIVALS",
+        description: "Discover our latest collection of premium shirts and trousers.",
+        dataAiHint: "clothing collection"
+    },
+]
+
 export default function Home() {
   const featuredProducts = getFeaturedProducts();
 
   return (
     <div className="flex flex-col bg-background">
-      <section className="relative w-full h-[60vh] md:h-[75vh] text-white">
-        <Image 
-            src="https://picsum.photos/1600/900?image=1003" 
-            alt="Hero background" 
-            fill 
-            className="object-cover"
-            data-ai-hint="male model"
-        />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="relative container mx-auto h-full flex flex-col items-start justify-center px-4 md:px-6 z-10">
-            <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
-                CELEBRATE FREEDOM
-            </h1>
-            <p className="mt-4 text-lg md:text-xl max-w-md">
-                From uncomfortable, flimsy, and synthetic clothing. Switch to 100% natural fabrics.
-            </p>
-            <Button size="lg" variant="secondary" className="mt-6">
-                Shop Collection
-            </Button>
-        </div>
+      <section className="relative w-full h-[80vh] md:h-screen text-white -mt-[160px]">
+        <Carousel className="w-full h-full" opts={{ loop: true }}>
+            <CarouselContent>
+                {heroSlides.map((slide, index) => (
+                    <CarouselItem key={index}>
+                        <div className="relative w-full h-[80vh] md:h-screen">
+                             <Image 
+                                src={slide.image} 
+                                alt={slide.alt} 
+                                fill 
+                                className="object-cover"
+                                data-ai-hint={slide.dataAiHint}
+                                priority={index === 0}
+                            />
+                            <div className="absolute inset-0 bg-black/40" />
+                            <div className="relative container mx-auto h-full flex flex-col items-start justify-center px-4 md:px-6 z-10">
+                                <h1 className="text-4xl md:text-6xl font-bold font-headline tracking-tight">
+                                    {slide.title}
+                                </h1>
+                                <p className="mt-4 text-lg md:text-xl max-w-md">
+                                    {slide.description}
+                                </p>
+                                <Button size="lg" variant="secondary" className="mt-6">
+                                    Shop Collection
+                                </Button>
+                            </div>
+                        </div>
+                    </CarouselItem>
+                ))}
+            </CarouselContent>
+            <CarouselPrevious className="absolute left-4 top-1/2 -translate-y-1/2 z-10 text-white bg-white/20 hover:bg-white/30 border-white/50" />
+            <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-10 text-white bg-white/20 hover:bg-white/30 border-white/50" />
+        </Carousel>
       </section>
 
       <section className="py-12 md:py-16">
