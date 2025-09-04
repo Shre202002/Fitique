@@ -37,80 +37,47 @@ export function Header() {
   
   const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
 
-  const navLinks = [
+  const mainNavLinks = [
+    { href: '/products', label: 'HALF SLEEVE' },
+    { href: '/products', label: 'LINEN SHIRTS' },
+    { href: '/products', label: 'HEMP SHIRTS' },
+    { href: '/products', label: 'FULL SLEEVE' },
+    { href: '/products', label: 'GIFTING' },
+    { href: '/products', label: 'NEW ARRIVALS' },
+  ];
+
+  const mobileNavLinks = [
     { href: '/products', label: 'SHOP' },
     { href: '/products', label: 'NEW ARRIVALS' },
     { href: '/products', label: 'GIFTING' },
     { href: '/tailor/register', label: 'BECOME A TAILOR' },
-  ];
+  ]
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="bg-primary text-primary-foreground py-2 text-center text-sm">
-        Free shipping on all orders
+    <header className="sticky top-0 z-50 w-full bg-accent text-accent-foreground shadow-md">
+      <div className="bg-primary text-primary-foreground py-2 text-center text-sm px-4 overflow-x-auto whitespace-nowrap">
+        <span className="inline-block mx-4">Buy 3 Shirts, Get 15% Off!</span>
+        <span className="hidden sm:inline-block mx-4">Buy 2 Shirts, Get 10% Off!</span>
+        <span className="hidden md:inline-block mx-4">Buy 1 Shirt, Get 5% Off!</span>
       </div>
+      
       <div className="container flex h-16 max-w-7xl items-center justify-between">
-        <Link href="/" className="flex items-center gap-2">
-          <MountainIcon className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold text-primary">Fitique</span>
-        </Link>
-        
-        <nav className="hidden md:flex gap-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.label}
-              href={link.href}
-              className="text-sm font-medium text-muted-foreground transition-colors hover:text-primary"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </nav>
-
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" size="icon" className="hidden md:inline-flex">
-            <Search className="h-5 w-5" />
-            <span className="sr-only">Search</span>
-          </Button>
-          <Link href="/account">
-            <Button variant="ghost" size="icon" className="hidden md:inline-flex">
-              <Heart className="h-5 w-5" />
-              <span className="sr-only">Wishlist</span>
-            </Button>
-          </Link>
-          <Link href="/cart">
-            <Button variant="ghost" size="icon" className="relative">
-              {isClient && totalQuantity > 0 && (
-                <span className="absolute -top-1 -right-1 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
-                  {totalQuantity}
-                </span>
-              )}
-              <ShoppingCart className="h-5 w-5" />
-              <span className="sr-only">Cart</span>
-            </Button>
-          </Link>
-          <Link href="/account">
-            <Button variant="ghost" size="icon">
-              <User className="h-5 w-5" />
-              <span className="sr-only">Account</span>
-            </Button>
-          </Link>
-          
-          <Sheet>
+        {/* Mobile Menu Trigger */}
+        <Sheet>
             <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden">
+              <Button variant="ghost" size="icon" className="md:hidden hover:bg-accent/80">
                 <Menu className="h-6 w-6" />
                 <span className="sr-only">Toggle Menu</span>
               </Button>
             </SheetTrigger>
-            <SheetContent side="right">
+            <SheetContent side="left">
               <div className="flex flex-col gap-6 p-6">
                 <Link href="/" className="flex items-center gap-2 mb-6">
                   <MountainIcon className="h-6 w-6 text-primary" />
-                  <span className="text-xl font-bold text-primary">Fitique</span>
+                  <span className="text-xl font-bold text-foreground">Fitique</span>
                 </Link>
                 <nav className="flex flex-col gap-4">
-                  {navLinks.map((link) => (
+                  {mobileNavLinks.map((link) => (
                     <Link
                       key={link.label}
                       href={link.href}
@@ -122,9 +89,65 @@ export function Header() {
                 </nav>
               </div>
             </SheetContent>
-          </Sheet>
+        </Sheet>
+        
+        {/* Desktop Logo */}
+        <Link href="/" className="hidden md:flex items-center gap-2">
+          <MountainIcon className="h-6 w-6" />
+          <span className="text-xl font-bold">Fitique</span>
+        </Link>
+        
+        {/* Mobile Logo */}
+         <Link href="/" className="flex items-center gap-2 md:hidden">
+          <MountainIcon className="h-6 w-6" />
+          <span className="text-xl font-bold">Fitique</span>
+        </Link>
+
+
+        <div className="flex items-center gap-2">
+           <Link href="/account">
+            <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+              <Heart className="h-5 w-5" />
+              <span className="sr-only">Wishlist</span>
+            </Button>
+          </Link>
+          <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+            <Search className="h-5 w-5" />
+            <span className="sr-only">Search</span>
+          </Button>
+           <Link href="/account">
+            <Button variant="ghost" size="icon" className="hover:bg-accent/80">
+              <User className="h-5 w-5" />
+              <span className="sr-only">Account</span>
+            </Button>
+          </Link>
+          <Link href="/cart">
+            <Button variant="ghost" size="icon" className="relative hover:bg-accent/80">
+              {isClient && totalQuantity > 0 && (
+                <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
+                  {totalQuantity}
+                </span>
+              )}
+              <ShoppingCart className="h-5 w-5" />
+              <span className="sr-only">Cart</span>
+            </Button>
+          </Link>
         </div>
       </div>
+
+       <nav className="hidden md:flex justify-center items-center h-12 border-t border-accent-foreground/10">
+          <div className="container flex justify-center gap-6 max-w-7xl">
+            {mainNavLinks.map((link) => (
+                <Link
+                key={link.label}
+                href={link.href}
+                className="text-sm font-medium text-accent-foreground/80 transition-colors hover:text-accent-foreground"
+                >
+                {link.label}
+                </Link>
+            ))}
+          </div>
+        </nav>
     </header>
   );
 }
