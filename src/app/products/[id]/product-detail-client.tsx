@@ -66,7 +66,7 @@ function CustomSizeForm({ product }: { product: Product }) {
     return (
         <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
             <DialogTrigger asChild>
-                 <Button size="lg" variant="outline" className="w-full text-base">Custom Size</Button>
+                 <Button size="lg" variant="secondary" className="w-full text-base flex-1 bg-yellow-400 text-black hover:bg-yellow-500">Custom Size</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>
