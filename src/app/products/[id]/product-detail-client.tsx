@@ -29,42 +29,66 @@ import { Input } from '@/components/ui/input';
 import { useToast } from '@/hooks/use-toast';
 import { ProductCard } from '@/components/product-card';
 import { getFeaturedProducts } from '@/lib/data';
+import { useCart } from '@/context/cart-context';
 
-function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
-    const handleSubmit = (e: React.FormEvent) => {
+function CustomSizeForm({ product }: { product: Product }) {
+    const { addItem } = useCart();
+    const { toast } = useToast();
+    const [isCustomSizeOpen, setCustomSizeOpen] = useState(false);
+
+    const handleCustomSizeSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        onSubmit();
+        addItem({ product, quantity: 1, size: 'Custom', isCustom: true });
+        setCustomSizeOpen(false);
+        toast({
+            title: "Measurements Saved!",
+            description: "Your custom sized item has been added to the cart.",
+        });
     }
+
     return (
-        <form onSubmit={handleSubmit} className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="height" className="text-right">Height (cm)</Label>
-                <Input id="height" placeholder="e.g. 178" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="chest" className="text-right">Chest (cm)</Label>
-                <Input id="chest" placeholder="e.g. 102" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="waist" className="text-right">Waist (cm)</Label>
-                <Input id="waist" placeholder="e.g. 81" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="hips" className="text-right">Hips (cm)</Label>
-                <Input id="hips" placeholder="e.g. 106" className="col-span-3" />
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="neck" className="text-right">Neck (cm)</Label>
-                <Input id="neck" placeholder="e.g. 40" className="col-span-3" />
-            </div>
-             <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="shoulder" className="text-right">Shoulder (cm)</Label>
-                <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
-            </div>
-            <DialogFooter>
-                 <Button type="submit">Save and choose your stitcher</Button>
-            </DialogFooter>
-        </form>
+        <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
+            <DialogTrigger asChild>
+                <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black text-base">AI Size Helper</Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader>
+                    <DialogTitle>Custom Measurements</DialogTitle>
+                    <DialogDescription>
+                        Please provide your measurements for a perfect fit. All measurements are in centimeters.
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleCustomSizeSubmit} className="grid gap-4 py-4">
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="height" className="text-right">Height (cm)</Label>
+                        <Input id="height" placeholder="e.g. 178" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="chest" className="text-right">Chest (cm)</Label>
+                        <Input id="chest" placeholder="e.g. 102" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="waist" className="text-right">Waist (cm)</Label>
+                        <Input id="waist" placeholder="e.g. 81" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="hips" className="text-right">Hips (cm)</Label>
+                        <Input id="hips" placeholder="e.g. 106" className="col-span-3" />
+                    </div>
+                    <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="neck" className="text-right">Neck (cm)</Label>
+                        <Input id="neck" placeholder="e.g. 40" className="col-span-3" />
+                    </div>
+                     <div className="grid grid-cols-4 items-center gap-4">
+                        <Label htmlFor="shoulder" className="text-right">Shoulder (cm)</Label>
+                        <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
+                    </div>
+                    <DialogFooter>
+                         <Button type="submit">Save and choose your stitcher</Button>
+                    </DialogFooter>
+                </form>
+            </DialogContent>
+        </Dialog>
     );
 }
 
@@ -73,30 +97,19 @@ export function ProductDetailClient({ product }: { product: Product }) {
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
   const [quantity, setQuantity] = useState(1);
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
-  const [isCustomSizeOpen, setCustomSizeOpen] = useState(false);
   const similarProducts = getFeaturedProducts().filter(p => p.id !== product.id).slice(0, 4);
   const originalPrice = product.price * 1.25;
+  const { addItem } = useCart();
 
 
   const handleAddToCart = () => {
-    // In a real app, this would add to a global cart state provider
-    console.log(`Added to cart: ${product.name}, Size: ${selectedSize}, Quantity: ${quantity}, Is Custom: false`);
+    addItem({ product, quantity, size: selectedSize, isCustom: false });
     toast({
       title: "Added to cart!",
       description: `${product.name} has been added to your cart.`,
       action: <Check className="h-5 w-5 text-green-500" />,
     });
   };
-
-  const handleCustomSizeSubmit = () => {
-    // In a real app, you would save the measurements and add to a global cart state provider
-     console.log(`Added to cart: ${product.name}, Size: Custom, Quantity: 1, Is Custom: true`);
-    setCustomSizeOpen(false);
-    toast({
-        title: "Measurements Saved!",
-        description: "Your custom sized item has been added to the cart.",
-    });
-  }
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
@@ -200,20 +213,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </Button>
           </div>
             {product.stitchingEnabled && (
-                <Dialog open={isCustomSizeOpen} onOpenChange={setCustomSizeOpen}>
-                    <DialogTrigger asChild>
-                        <Button size="lg" variant="default" className="w-full bg-yellow-400 hover:bg-yellow-500 text-black text-base">AI Size Helper</Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                        <DialogHeader>
-                            <DialogTitle>Custom Measurements</DialogTitle>
-                            <DialogDescription>
-                                Please provide your measurements for a perfect fit. All measurements are in centimeters.
-                            </DialogDescription>
-                        </DialogHeader>
-                        <CustomSizeForm onSubmit={handleCustomSizeSubmit} />
-                    </DialogContent>
-                </Dialog>
+                <CustomSizeForm product={product} />
             )}
           
             <Accordion type="single" collapsible className="w-full">

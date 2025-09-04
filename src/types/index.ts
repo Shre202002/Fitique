@@ -17,5 +17,6 @@ export type CartItem = {
   product: Product;
   quantity: number;
   size: string;
-  isCustomSize: boolean;
+  isCustom: boolean;
 };
+
