@@ -2,18 +2,12 @@
 "use client";
 
 import Link from 'next/link';
-import { ShoppingCart, User, Heart, Search, Menu } from 'lucide-react';
+import { ShoppingCart, User, Heart, Search } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/context/cart-context';
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
-import {
-    Carousel,
-    CarouselContent,
-    CarouselItem,
-} from "@/components/ui/carousel"
-import Autoplay from "embla-carousel-autoplay"
+import { MobileNav } from './mobile-nav';
 
 // Reusable SVG icon for the logo.
 function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
@@ -88,15 +82,6 @@ export function Header() {
     { href: '/products', label: 'NEW ARRIVALS' },
   ];
 
-  // Navigation links for the mobile slide-out menu.
-  const mobileNavLinks = [
-    { href: '/products', label: 'SHOP' },
-    { href: '/products', label: 'NEW ARRIVALS' },
-    { href: '/account', label: 'MY ACCOUNT' },
-    { href: '/account', label: 'WISHLIST' },
-    { href: '/tailor/register', label: 'BECOME A TAILOR' },
-  ]
-
   // Dynamically sets header classes based on scroll state for transparency effect.
   const headerClasses = `sticky top-0 z-50 w-full transition-colors duration-300 ${
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
@@ -106,36 +91,7 @@ export function Header() {
     <header className={headerClasses}>
       <div className="container flex h-16 max-w-7xl items-center justify-between">
         {/* Mobile Menu Trigger (Hamburger Icon) */}
-        <Sheet>
-            <SheetTrigger asChild>
-              <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10">
-                <Menu className="h-6 w-6" />
-                <span className="sr-only">Toggle Menu</span>
-              </Button>
-            </SheetTrigger>
-            <SheetContent side="left">
-               <SheetHeader>
-                  <SheetTitle className="sr-only">Main Menu</SheetTitle>
-                </SheetHeader>
-              <div className="flex flex-col gap-6 p-6 bg-background text-foreground h-full">
-                <Link href="/" className="flex items-center gap-2 mb-6">
-                  <MountainIcon className="h-6 w-6 text-primary" />
-                  <span className="text-xl font-bold">Fitique</span>
-                </Link>
-                <nav className="flex flex-col gap-4">
-                  {mobileNavLinks.map((link) => (
-                    <Link
-                      key={link.label}
-                      href={link.href}
-                      className="text-lg font-medium text-foreground transition-colors hover:text-primary"
-                    >
-                      {link.label}
-                    </Link>
-                  ))}
-                </nav>
-              </div>
-            </SheetContent>
-        </Sheet>
+        <MobileNav />
         
         {/* Desktop Logo */}
         <Link href="/" className="hidden md:flex items-center gap-2">
