@@ -35,7 +35,7 @@ export function Header() {
     setIsClient(true);
   }, []);
   
-  const totalQuantity = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const totalQuantity = isClient ? cartItems.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
   const mainNavLinks = [
     { href: '/products', label: 'HALF SLEEVE' },
