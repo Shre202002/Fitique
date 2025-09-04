@@ -6,9 +6,16 @@ import { ShoppingCart, User, Heart, Search, Menu } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Sheet, SheetContent, SheetTrigger } from '@/components/ui/sheet';
 import { useCart } from '@/context/cart-context';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { usePathname } from 'next/navigation';
+import {
+    Carousel,
+    CarouselContent,
+    CarouselItem,
+} from "@/components/ui/carousel"
+import Autoplay from "embla-carousel-autoplay"
 
+// Reusable SVG icon for the logo.
 function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   return (
     <svg
@@ -28,17 +35,28 @@ function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
   );
 }
 
+// The main header component for the application.
 export function Header() {
+  // Access cart items from the cart context.
   const { cartItems } = useCart();
+  // State to track if the component is mounted on the client. This is crucial for avoiding hydration errors.
   const [isClient, setIsClient] = useState(false);
+  // State to track if the page has been scrolled.
   const [isScrolled, setIsScrolled] = useState(false);
+  // Gets the current URL path.
   const pathname = usePathname();
+  // Checks if the current page is the homepage.
   const isHomePage = pathname === '/';
   
+  // Effect to set the `isClient` state to true once the component mounts in the browser.
+  // This prevents client-side-only UI (like the cart count) from mismatching the server render.
   useEffect(() => {
     setIsClient(true);
 
+    // Function to handle the scroll event.
     const handleScroll = () => {
+      // For the homepage, the header becomes opaque after scrolling 50px.
+      // For other pages, it's always opaque.
       if (isHomePage) {
         setIsScrolled(window.scrollY > 50);
       } else {
@@ -46,16 +64,21 @@ export function Header() {
       }
     };
 
+    // Add scroll event listener.
     window.addEventListener('scroll', handleScroll);
+    // Initial check on mount.
     handleScroll(); 
 
+    // Cleanup function to remove the event listener.
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
-  }, [isHomePage]);
+  }, [isHomePage]); // Dependency array ensures this effect re-runs if the page changes.
   
+  // Calculates the total number of items in the cart. Rendered only on the client.
   const totalQuantity = isClient ? cartItems.reduce((acc, item) => acc + item.quantity, 0) : 0;
 
+  // Navigation links for the main desktop menu.
   const mainNavLinks = [
     { href: '/products', label: 'HALF SLEEVE' },
     { href: '/products', label: 'LINEN SHIRTS' },
@@ -65,6 +88,7 @@ export function Header() {
     { href: '/products', label: 'NEW ARRIVALS' },
   ];
 
+  // Navigation links for the mobile slide-out menu.
   const mobileNavLinks = [
     { href: '/products', label: 'SHOP' },
     { href: '/products', label: 'NEW ARRIVALS' },
@@ -72,10 +96,12 @@ export function Header() {
     { href: '/tailor/register', label: 'BECOME A TAILOR' },
   ]
 
+  // Dynamically sets header classes based on scroll state for transparency effect.
   const headerClasses = `sticky top-0 z-50 w-full transition-colors duration-300 ${
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
   }`;
-
+  
+  // Content for the scrolling announcement bar.
   const announcementContent = [
     "Buy 3 Shirts, Get 15% Off!",
     "Buy 2 Shirts, Get 10% Off!",
@@ -84,12 +110,14 @@ export function Header() {
 
   return (
     <header className={headerClasses}>
+      {/* Announcement bar with a marquee/scrolling effect */}
        <div className={`py-2 text-center text-sm px-4 overflow-hidden whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
+        {/* The animation-marquee class applies the continuous scroll effect. */}
         <div className="animate-marquee flex">
+          {/* Content is duplicated to create a seamless loop. */}
           <span className="inline-block mx-4">{announcementContent[0]}</span>
           <span className="inline-block mx-4">{announcementContent[1]}</span>
           <span className="inline-block mx-4">{announcementContent[2]}</span>
-          {/* Duplicate for seamless scroll */}
           <span className="inline-block mx-4">{announcementContent[0]}</span>
           <span className="inline-block mx-4">{announcementContent[1]}</span>
           <span className="inline-block mx-4">{announcementContent[2]}</span>
@@ -97,7 +125,7 @@ export function Header() {
       </div>
       
       <div className="container flex h-16 max-w-7xl items-center justify-between">
-        {/* Mobile Menu Trigger */}
+        {/* Mobile Menu Trigger (Hamburger Icon) */}
         <Sheet>
             <SheetTrigger asChild>
               <Button variant="ghost" size="icon" className="md:hidden hover:bg-white/10">
@@ -138,7 +166,7 @@ export function Header() {
           <span className="text-xl font-bold">Fitique</span>
         </Link>
 
-
+        {/* Header action icons */}
         <div className="flex items-center gap-2">
            <Link href="/account">
             <Button variant="ghost" size="icon" className="hover:bg-white/10">
@@ -158,6 +186,7 @@ export function Header() {
           </Link>
           <Link href="/cart">
             <Button variant="ghost" size="icon" className="relative hover:bg-white/10">
+              {/* The cart quantity badge is only rendered on the client to prevent hydration errors. */}
               {isClient && totalQuantity > 0 && (
                 <span className="absolute top-0 right-0 flex h-4 w-4 items-center justify-center rounded-full bg-primary text-xs font-bold text-primary-foreground">
                   {totalQuantity}
@@ -170,6 +199,7 @@ export function Header() {
         </div>
       </div>
 
+       {/* Desktop Navigation Links */}
        <nav className={`hidden md:flex justify-center items-center h-12 border-t transition-colors duration-300 ${isScrolled ? 'border-accent-foreground/10' : 'border-transparent'}`}>
           <div className="container flex justify-center gap-6 max-w-7xl">
             {mainNavLinks.map((link) => (

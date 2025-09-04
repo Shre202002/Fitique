@@ -32,20 +32,28 @@ import { getFeaturedProducts } from '@/lib/data';
 import { useCart } from '@/context/cart-context';
 import { useRouter } from 'next/navigation';
 
+// A form component for capturing custom size measurements, displayed within a dialog.
 function CustomSizeForm({ product }: { product: Product }) {
+    // Imports the addItem function from the cart context.
     const { addItem } = useCart();
+    // Hook for showing toast notifications.
     const { toast } = useToast();
+    // State to control the visibility of the custom size dialog.
     const [isCustomSizeOpen, setCustomSizeOpen] = useState(false);
+    // State to hold the user's measurement inputs.
     const [measurements, setMeasurements] = useState({
         height: '', chest: '', waist: '', hips: '', neck: '', shoulder: ''
     });
 
+    // Updates the measurements state when an input field changes.
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMeasurements({ ...measurements, [e.target.id]: e.target.value });
     };
 
+    // Checks if all measurement fields have been filled.
     const allFieldsFilled = Object.values(measurements).every(val => val.trim() !== '');
 
+    // Handles the submission of the custom size form.
     const handleCustomSizeSubmit = (e: React.FormEvent) => {
         e.preventDefault();
         if (!allFieldsFilled) {
@@ -56,6 +64,29 @@ function CustomSizeForm({ product }: { product: Product }) {
             });
             return;
         }
+
+        /*
+            BACKEND INTEGRATION POINT: Save Custom Measurements
+
+            When a user submits their custom measurements, this data should be saved to their profile
+            on the backend for future use. This would likely be a PUT or POST request.
+            
+            Backend Endpoint: PUT /api/user/measurements
+            Payload:
+            {
+                "userId": "current_user_id", // Managed by the session on the backend
+                "measurements": {
+                    "height": "178",
+                    "chest": "102",
+                    "waist": "81",
+                    "hips": "106",
+                    "neck": "40",
+                    "shoulder": "48"
+                }
+            }
+        */
+
+        // Adds the custom-sized item to the local cart state.
         addItem({ product, quantity: 1, size: 'Custom', isCustom: true });
         setCustomSizeOpen(false);
         toast({
@@ -64,6 +95,7 @@ function CustomSizeForm({ product }: { product: Product }) {
         });
     }
 
+    // Placeholder function for the Virtual Tailor feature.
     const handleVirtualTailorClick = () => {
         toast({
             title: "Coming Soon!",
@@ -84,6 +116,7 @@ function CustomSizeForm({ product }: { product: Product }) {
                     </DialogDescription>
                 </DialogHeader>
                 <form onSubmit={handleCustomSizeSubmit} className="grid gap-4 py-4">
+                    {/* Form fields for each measurement */}
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Label htmlFor="height" className="text-right">Height (cm)</Label>
                         <Input id="height" value={measurements.height} onChange={handleInputChange} placeholder="e.g. 178" className="col-span-3" />
@@ -118,17 +151,24 @@ function CustomSizeForm({ product }: { product: Product }) {
     );
 }
 
+// The main client component for displaying product details.
 export function ProductDetailClient({ product }: { product: Product }) {
   const { toast } = useToast();
   const router = useRouter();
+  // State for the selected size, defaults to the first available size.
   const [selectedSize, setSelectedSize] = useState<string>(product.sizes[0]);
+  // State for the quantity of the product.
   const [quantity, setQuantity] = useState(1);
+  // State for the currently displayed image in the gallery.
   const [selectedImage, setSelectedImage] = useState(product.images[0]);
+  // Fetches similar products to display at the bottom of the page.
   const similarProducts = getFeaturedProducts().filter(p => p.id !== product.id).slice(0, 4);
+  // Example of calculating a discounted price.
   const originalPrice = product.price * 1.25;
+  // Imports addItem function from the cart context.
   const { cartItems, addItem } = useCart();
 
-
+  // Handles adding the selected product to the cart.
   const handleAddToCart = () => {
     addItem({ product, quantity, size: selectedSize, isCustom: false });
     toast({
@@ -138,12 +178,25 @@ export function ProductDetailClient({ product }: { product: Product }) {
     });
   };
 
+  // Handles the "Buy Now" action, adding to cart and redirecting to checkout.
   const handleBuyNow = () => {
     addItem({ product, quantity, size: selectedSize, isCustom: false });
     router.push('/checkout');
   };
 
+  // Handles adding a product to the wishlist.
   const handleWishlistClick = () => {
+    /*
+        BACKEND INTEGRATION POINT: Add to Wishlist
+
+        This would send a request to the backend to add the product to the user's wishlist.
+        
+        Backend Endpoint: POST /api/user/wishlist
+        Payload:
+        {
+            "productId": "classic-blue-denim"
+        }
+    */
     toast({
         title: "Added to Wishlist!",
         description: `${product.name} has been saved to your wishlist.`,
@@ -153,6 +206,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
 
   return (
     <div className="container mx-auto max-w-7xl px-4 py-8 md:py-12">
+      {/* Breadcrumb navigation */}
       <div className="mb-6 text-sm text-muted-foreground flex items-center gap-1.5 flex-wrap">
         <Link href="/" className="hover:text-primary">Home</Link>
         <ChevronRight className="h-4 w-4" />
@@ -161,7 +215,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
         <span className="font-medium text-foreground">{product.name}</span>
       </div>
       <div className="grid md:grid-cols-2 gap-8 lg:gap-12">
-        {/* Image Gallery */}
+        {/* Image Gallery Section */}
         <div className="flex flex-col gap-4 md:sticky top-24 self-start">
           <div className="aspect-square rounded-lg overflow-hidden border bg-card">
             <Image
@@ -173,6 +227,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
               data-ai-hint="fashion detail"
             />
           </div>
+          {/* Thumbnail images */}
           <div className="grid grid-cols-5 gap-2">
             {product.images.map((img, index) => (
               <button key={index} onClick={() => setSelectedImage(img)} className={`aspect-square rounded-md overflow-hidden border-2 ${selectedImage === img ? 'border-primary' : 'border-transparent'}`}>
@@ -189,13 +244,14 @@ export function ProductDetailClient({ product }: { product: Product }) {
           </div>
         </div>
 
-        {/* Product Info */}
+        {/* Product Information Section */}
         <div className="flex flex-col gap-6">
           <div>
             <h1 className="text-3xl lg:text-4xl font-bold font-headline text-accent">{product.name}</h1>
             <div className="flex items-center gap-4 mt-2">
                <div className="flex items-center gap-2">
                     <div className="flex items-center">
+                        {/* Displays star rating based on product data. */}
                         {[...Array(5)].map((_, i) => (
                             <Star
                             key={i}
@@ -216,6 +272,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </p>
           </div>
           
+          {/* Size Selection */}
           <div className="flex flex-col gap-4">
             <Label className="text-lg font-semibold">Size</Label>
             <RadioGroup value={selectedSize} onValueChange={setSelectedSize} className="flex flex-wrap gap-2">
@@ -233,6 +290,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </RadioGroup>
           </div>
 
+           {/* Quantity Selection */}
            <div className="flex items-center gap-4">
             <Label className="text-lg font-semibold">Quantity</Label>
             <div className="flex items-center gap-2 border rounded-md">
@@ -246,8 +304,10 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
           
+          {/* Action Buttons */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
             <Button size="lg" className="text-base" onClick={handleAddToCart}>Add to Cart</Button>
+            {/* The Custom Size button is only shown if the product is enabled for it. */}
             {product.stitchingEnabled && (
                 <CustomSizeForm product={product} />
             )}
@@ -257,6 +317,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             <Button size="lg" className="text-base" onClick={handleBuyNow}>Buy Now</Button>
           </div>
           
+            {/* Accordion for additional product details */}
             <Accordion type="single" collapsible className="w-full">
                 <AccordionItem value="description">
                     <AccordionTrigger>Product Description</AccordionTrigger>
@@ -279,6 +340,7 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </Accordion>
         </div>
       </div>
+      {/* "You may also like" section for related products */}
       <div className="mt-16">
         <h2 className="text-2xl font-bold text-center mb-8">You may also like</h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">

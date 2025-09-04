@@ -14,14 +14,47 @@ import { cn } from '@/lib/utils';
 import { useState } from 'react';
 import { format } from 'date-fns';
 
-
+// Static array of specializations for tailors to choose from.
 const specializations = [
     "Traditional Wear", "Western Wear", "Formal Suits", "Wedding Attire", 
     "Casual Clothing", "Ethnic Wear", "Alterations", "Embroidery"
 ];
 
+// The main component for the tailor registration page.
 export default function TailorRegisterPage() {
+    // State to manage the selected date for the date of birth.
     const [date, setDate] = useState<Date>()
+
+    /*
+        BACKEND INTEGRATION POINT: Tailor Registration
+        
+        When this form is submitted, it should send a multipart/form-data POST request to the backend.
+        This is necessary to handle file uploads (profile photo, portfolio, etc.).
+        
+        Backend Endpoint: POST /api/tailors/register
+
+        The backend would process the text fields and file uploads, create a new tailor profile,
+        and likely mark it as "pending approval" until an admin verifies it.
+
+        Form Data Structure:
+        - full-name: "John Doe" (String)
+        - email: "m@example.com" (String)
+        - phone: "+1 (555) 555-5555" (String)
+        - dob: "YYYY-MM-DD" (String, optional)
+        - profile-photo: (File object, optional)
+        - business-name: "Doe's Fine Tailoring" (String)
+        - experience: 15 (Number)
+        - specializations: ["Traditional Wear", "Formal Suits"] (Array of Strings)
+        - business-description: "..." (String)
+        - portfolio-images: (Array of File objects, optional)
+        - complete-address: "123 Craftsmans Ln" (String)
+        - city: "Sewville" (String)
+        - state: "Fabricana" (String)
+        - pincode: "98765" (String)
+        - license: (File object, optional)
+        - terms: "on" (Boolean, based on checkbox)
+        - commission: "on" (Boolean, based on checkbox)
+    */
 
   return (
     <div className="container mx-auto max-w-4xl px-4 py-8 md:py-12">
@@ -34,8 +67,9 @@ export default function TailorRegisterPage() {
             </p>
         </div>
      
+        {/* The main registration form. In a real app, this would be handled with a library like react-hook-form. */}
         <form className="space-y-8">
-            {/* Personal Information */}
+            {/* Personal Information Section */}
             <Card>
                 <CardHeader>
                     <CardTitle>Personal Information</CardTitle>
@@ -85,7 +119,7 @@ export default function TailorRegisterPage() {
                 </CardContent>
             </Card>
 
-            {/* Business Information */}
+            {/* Business Information Section */}
             <Card>
                 <CardHeader>
                     <CardTitle>Business Information</CardTitle>
@@ -104,6 +138,7 @@ export default function TailorRegisterPage() {
                     <div className="grid gap-2">
                         <Label>Specializations *</Label>
                         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                            {/* Dynamically renders checkboxes for each specialization. */}
                             {specializations.map(spec => (
                                 <div key={spec} className="flex items-center gap-2">
                                     <Checkbox id={`spec-${spec}`} />
@@ -124,7 +159,7 @@ export default function TailorRegisterPage() {
                 </CardContent>
             </Card>
             
-            {/* Business Address */}
+            {/* Business Address Section */}
             <Card>
                 <CardHeader>
                     <CardTitle>Business Address</CardTitle>
@@ -144,14 +179,13 @@ export default function TailorRegisterPage() {
                             <Input id="state" required />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="pincode">Pincode *</Label>
-                            <Input id="pincode" required />
+                            <Label htmlFor="pincode">Pincode *</Label>                            <Input id="pincode" required />
                         </div>
                     </div>
                 </CardContent>
             </Card>
             
-            {/* Documents & Agreements */}
+            {/* Documents & Agreements Section */}
              <Card>
                 <CardHeader>
                     <CardTitle>Documents & Agreements</CardTitle>
@@ -177,10 +211,16 @@ export default function TailorRegisterPage() {
                 </CardContent>
             </Card>
 
+            {/* Form submission buttons */}
             <div className="flex flex-col sm:flex-row-reverse gap-4">
                 <Button type="submit" size="lg" className="w-full sm:w-auto">
                     Submit Registration
                 </Button>
+                {/* 
+                    "Save as Draft" would likely post the current form data to a different endpoint
+                    or the same endpoint with a "status: draft" field.
+                    Backend Endpoint: POST /api/tailors/draft
+                */}
                 <Button type="button" variant="outline" size="lg" className="w-full sm:w-auto">
                     Save as Draft
                 </Button>
