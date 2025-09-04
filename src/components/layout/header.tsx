@@ -9,26 +9,6 @@ import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { MobileNav } from './mobile-nav';
 
-// Reusable SVG icon for the logo.
-function MountainIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
-    </svg>
-  );
-}
-
 // The main header component for the application.
 export function Header() {
   // Access cart items from the cart context.
@@ -83,7 +63,7 @@ export function Header() {
   ];
 
   // Dynamically sets header classes based on scroll state for transparency effect.
-  const headerClasses = `sticky top-0 z-50 w-full transition-colors duration-300 ${
+  const headerClasses = `absolute top-0 z-50 w-full transition-colors duration-300 ${
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
   }`;
   
@@ -95,13 +75,39 @@ export function Header() {
         
         {/* Desktop Logo */}
         <Link href="/" className="hidden md:flex items-center gap-2">
-          <MountainIcon className="h-6 w-6" />
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+          </svg>
           <span className="text-xl font-bold">Fitique</span>
         </Link>
         
         {/* Mobile Logo */}
          <Link href="/" className="flex items-center gap-2 md:hidden">
-          <MountainIcon className="h-6 w-6" />
+          <svg
+            className="h-6 w-6"
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          >
+            <path d="m8 3 4 8 5-5 5 15H2L8 3z" />
+          </svg>
           <span className="text-xl font-bold">Fitique</span>
         </Link>
 
