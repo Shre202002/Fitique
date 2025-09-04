@@ -38,13 +38,12 @@ export function Header() {
   useEffect(() => {
     setIsClient(true);
 
-    if (!isHomePage) {
-      setIsScrolled(true);
-      return;
-    }
-
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
+      if (isHomePage) {
+        setIsScrolled(window.scrollY > 50);
+      } else {
+        setIsScrolled(true);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -77,12 +76,21 @@ export function Header() {
     isScrolled ? 'bg-accent text-accent-foreground shadow-md' : 'bg-transparent text-white'
   }`;
 
+  const announcementContent = (
+    <>
+        <span className="inline-block mx-4">Buy 3 Shirts, Get 15% Off!</span>
+        <span className="inline-block mx-4">Buy 2 Shirts, Get 10% Off!</span>
+        <span className="inline-block mx-4">Buy 1 Shirt, Get 5% Off!</span>
+    </>
+  );
+
   return (
     <header className={headerClasses}>
-      <div className={`py-2 text-center text-sm px-4 overflow-x-auto whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
-        <span className="inline-block mx-4">Buy 3 Shirts, Get 15% Off!</span>
-        <span className="hidden sm:inline-block mx-4">Buy 2 Shirts, Get 10% Off!</span>
-        <span className="hidden md:inline-block mx-4">Buy 1 Shirt, Get 5% Off!</span>
+      <div className={`py-2 text-center text-sm px-4 overflow-hidden whitespace-nowrap transition-colors duration-300 ${isScrolled ? 'bg-primary text-primary-foreground' : 'bg-primary/80 text-primary-foreground'}`}>
+        <div className="animate-[marquee_20s_linear_infinite] flex">
+           {announcementContent}
+           {announcementContent}
+        </div>
       </div>
       
       <div className="container flex h-16 max-w-7xl items-center justify-between">
