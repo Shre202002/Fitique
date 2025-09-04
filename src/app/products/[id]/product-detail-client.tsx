@@ -61,7 +61,7 @@ function CustomSizeForm({ onSubmit }: { onSubmit: () => void }) {
                 <Input id="shoulder" placeholder="e.g. 48" className="col-span-3" />
             </div>
             <DialogFooter className='sm:justify-between gap-2 flex-col sm:flex-row-reverse'>
-                <Button type="submit">Save & Add to Cart</Button>
+                <Button type="submit">Save and choose your stitcher</Button>
                  <Button type="button" variant="default" className="bg-yellow-400 hover:bg-yellow-500 text-black">
                    AI Size Helper
                 </Button>
