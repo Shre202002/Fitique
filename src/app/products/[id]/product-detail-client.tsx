@@ -101,7 +101,7 @@ function CustomSizeForm({ product }: { product: Product }) {
                         <Input id="shoulder" value={measurements.shoulder} onChange={handleInputChange} placeholder="e.g. 48" className="col-span-3" />
                     </div>
                     <DialogFooter className="sm:justify-start gap-2">
-                         <Button type="submit" disabled={!allFieldsFilled}>Save & Add to Cart</Button>
+                         <Button type="submit" disabled={!allFieldsFilled}>Save Measurements</Button>
                          <Button type="button" variant="secondary" className="bg-yellow-400 hover:bg-yellow-500 text-black">Virtual Tailor</Button>
                     </DialogFooter>
                 </form>
@@ -224,14 +224,15 @@ export function ProductDetailClient({ product }: { product: Product }) {
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <Button size="lg" className="flex-1 text-base" onClick={handleAddToCart}>Add to Cart</Button>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            <Button size="lg" className="text-base" onClick={handleAddToCart}>Add to Cart</Button>
             {product.stitchingEnabled && (
                 <CustomSizeForm product={product} />
             )}
-            <Button size="lg" variant="ghost" className="flex-1 text-base border border-input gap-2">
+            <Button size="lg" variant="ghost" className="text-base border border-input gap-2">
                 <Heart className="w-5 h-5"/> Wishlist
             </Button>
+            <Button size="lg" className="text-base">Buy Now</Button>
           </div>
           
             <Accordion type="single" collapsible className="w-full">
@@ -265,3 +266,5 @@ export function ProductDetailClient({ product }: { product: Product }) {
     </div>
   );
 }
+
+    
