@@ -7,6 +7,7 @@ import { Separator } from '@/components/ui/separator';
 import { User, Package, Heart, MapPin, LogOut } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { cn } from '@/lib/utils';
 
 // Defines the possible values for the active tab in the account section.
 type ActiveTab = 'profile' | 'orders' | 'wishlist' | 'addresses';
@@ -149,37 +150,65 @@ export default function AccountPage() {
         }
     };
 
+    const navItems = [
+      { id: 'profile', label: 'Profile', icon: User },
+      { id: 'orders', label: 'Orders', icon: Package },
+      { id: 'wishlist', label: 'Wishlist', icon: Heart },
+      { id: 'addresses', label: 'Addresses', icon: MapPin },
+    ];
+
     // Main render method for the component.
     return (
         <div className="container mx-auto max-w-6xl px-4 py-8 md:py-12">
             <h1 className="text-3xl md:text-4xl font-bold font-headline text-accent mb-8">My Account</h1>
             <div className="grid md:grid-cols-[250px_1fr] gap-8 items-start">
-                {/* Navigation menu for account sections. */}
-                <nav className="flex flex-col gap-2 text-sm text-muted-foreground">
-                    {/* Each button sets the active tab, changing its style and the rendered content. */}
-                    <Button variant={activeTab === 'profile' ? 'secondary' : 'ghost'} onClick={() => setActiveTab('profile')} className="justify-start gap-2">
-                        <User className="w-4 h-4" /> Profile
-                    </Button>
-                    <Button variant={activeTab === 'orders' ? 'secondary' : 'ghost'} onClick={() => setActiveTab('orders')} className="justify-start gap-2">
-                        <Package className="w-4 h-4" /> Orders
-                    </Button>
-                    <Button variant={activeTab === 'wishlist' ? 'secondary' : 'ghost'} onClick={() => setActiveTab('wishlist')} className="justify-start gap-2">
-                        <Heart className="w-4 h-4" /> Wishlist
-                    </Button>
-                    <Button variant={activeTab === 'addresses' ? 'secondary' : 'ghost'} onClick={() => setActiveTab('addresses')} className="justify-start gap-2">
-                        <MapPin className="w-4 h-4" /> Addresses
-                    </Button>
+                {/* Desktop Navigation Menu */}
+                <nav className="hidden md:flex flex-col gap-2 text-sm text-muted-foreground">
+                    {navItems.map(item => (
+                      <Button
+                          key={item.id}
+                          variant={activeTab === item.id ? 'secondary' : 'ghost'}
+                          onClick={() => setActiveTab(item.id as ActiveTab)}
+                          className="justify-start gap-2"
+                      >
+                          <item.icon className="w-4 h-4" /> {item.label}
+                      </Button>
+                    ))}
                     <Separator className="my-2" />
-                    {/* Logout button. */}
                     <Button variant="ghost" onClick={handleLogout} className="justify-start gap-2 text-destructive hover:text-destructive">
                         <LogOut className="w-4 h-4" /> Logout
                     </Button>
                 </nav>
-                {/* Renders the content for the currently selected tab. */}
-                <div className="space-y-8">
+
+                {/* Mobile Navigation Tabs */}
+                <div className="md:hidden">
+                    <div className="border-b">
+                        <nav className="-mb-px flex space-x-4 overflow-x-auto" aria-label="Tabs">
+                            {navItems.map(item => (
+                                <button
+                                    key={item.id}
+                                    onClick={() => setActiveTab(item.id as ActiveTab)}
+                                    className={cn(
+                                        'group inline-flex items-center gap-2 py-4 px-1 border-b-2 font-medium text-sm whitespace-nowrap',
+                                        activeTab === item.id
+                                            ? 'border-primary text-primary'
+                                            : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+                                    )}
+                                >
+                                    <item.icon className="w-4 h-4" />
+                                    {item.label}
+                                </button>
+                            ))}
+                        </nav>
+                    </div>
+                </div>
+                
+                {/* Content Area */}
+                <div className="space-y-8 md:col-start-2">
                    {renderContent()}
                 </div>
             </div>
         </div>
     );
 }
+
