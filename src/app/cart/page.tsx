@@ -10,7 +10,7 @@ import { useState } from 'react';
 
 const initialCartItems = [
   { id: 1, productId: 'classic-blue-denim', name: 'Classic Blue Denim Jacket', price: 89.99, quantity: 1, size: 'M', image: 'https://placehold.co/100x100.png', isCustom: false },
-  { id: 2, productId: 'summer-floral-dress', name: 'Summer Floral Maxi Dress', price: 120.00, quantity: 1, size: 'Custom', image: '', isCustom: true },
+  { id: 2, productId: 'summer-floral-dress', name: 'Summer Floral Maxi Dress', price: 120.00, quantity: 1, size: 'Custom', image: 'https://placehold.co/100x100.png', isCustom: true },
 ];
 
 export default function CartPage() {
@@ -49,13 +49,7 @@ export default function CartPage() {
             <div className="flex flex-col gap-6">
             {cartItems.map((item) => (
                 <div key={item.id} className="flex gap-4 p-4 border rounded-lg bg-card">
-                {item.isCustom ? (
-                    <div className="w-24 h-24 bg-muted rounded-md flex items-center justify-center shrink-0">
-                    <Tag className="w-12 h-12 text-muted-foreground" />
-                    </div>
-                ) : (
                     <Image src={item.image} alt={item.name} width={96} height={96} className="rounded-md object-cover" data-ai-hint="product apparel"/>
-                )}
                 <div className="flex-1 flex flex-col">
                     <div>
                     <h3 className="font-semibold text-lg">{item.name}</h3>
