@@ -71,7 +71,7 @@ export default function Home() {
   const autoplay = React.useRef(Autoplay({ delay: 4000, stopOnInteraction: false }))
 
   return (
-    <div className="flex flex-col bg-background">
+    <main className="-mt-28">
       <section className="relative w-full h-screen text-white">
         <Carousel 
             className="w-full h-full embla-fade" 
@@ -85,7 +85,7 @@ export default function Home() {
                             src={slide.image}
                             alt={slide.alt} 
                             fill
-                            className="object-cover object-center"
+                            className="object-cover"
                             data-ai-hint={slide.dataAiHint}
                             priority={index === 0}
                         />
@@ -107,7 +107,7 @@ export default function Home() {
         </Carousel>
       </section>
 
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 bg-background">
         <div className="container mx-auto px-4 md:px-6">
           <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 md:gap-8">
             {categories.map((category) => (
@@ -129,7 +129,7 @@ export default function Home() {
         </div>
       </section>
 
-      <section className="container mx-auto px-4 md:px-6 my-8">
+      <section className="container mx-auto px-4 md:px-6 my-8 bg-background">
         <Link href="/products">
             <div className="relative w-full rounded-lg overflow-hidden">
                 <Image src="https://picsum.photos/1200/300?image=1025" width={1200} height={300} alt="Ad Banner" className="w-full h-auto" data-ai-hint="clothing banner"/>
@@ -140,7 +140,7 @@ export default function Home() {
         </Link>
       </section>
 
-      <section className="py-12 md:py-16">
+      <section className="py-12 md:py-16 bg-background">
         <div className="container px-4 md:px-6">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-3xl font-bold tracking-tighter font-headline text-accent">
@@ -160,7 +160,7 @@ export default function Home() {
         </div>
       </section>
       
-      <section className="container mx-auto px-4 md:px-6 my-12">
+      <section className="container mx-auto px-4 md:px-6 my-12 bg-background">
         <div className="grid md:grid-cols-2 gap-8">
             {features.map((feature) => (
                 <Link href={feature.href} key={feature.title} className="group">
@@ -196,6 +196,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </div>
+    </main>
   );
 }
