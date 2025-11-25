@@ -1,3 +1,4 @@
+
 import { notFound } from 'next/navigation';
 import { getAllProducts, getProductById } from '@/lib/data';
 import { ProductDetailClient } from './product-detail-client';
